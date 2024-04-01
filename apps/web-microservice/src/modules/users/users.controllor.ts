@@ -21,7 +21,7 @@ import { registerUserValidationPipe } from './pipes/register-user-validation.pip
 import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
 import { UseRoles } from 'apps/decorators/role.decorator';
 import ReqUser from 'apps/decorators/req-user.decorator';
-import { RolesUserEnum } from 'apps/enum/roles-user.enum';
+import { RolesUserEnum } from 'apps/web-microservice/src/modules/users/enum/roles-user.enum';
 
 @Controller('users')
 @ApiTags('user')

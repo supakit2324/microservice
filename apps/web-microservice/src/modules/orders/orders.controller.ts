@@ -20,7 +20,7 @@ import { UsersHistoryQueryDto } from './dto/users-history-query.dto';
 import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
 import { CreateOrderEntity } from './entities/create-order.entity';
 import { UseRoles } from 'apps/decorators/role.decorator';
-import { RolesUserEnum } from 'apps/enum/roles-user.enum';
+import { RolesUserEnum } from 'apps/web-microservice/src/modules/users/enum/roles-user.enum';
 import ReqUser from 'apps/decorators/req-user.decorator';
 
 @Controller('orders')
