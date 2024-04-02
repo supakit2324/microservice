@@ -14,6 +14,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get<ConfigService>(ConfigService);
   const port = configService.get('users.port');
+  const tcp = configService.get('tcpUser')
   const provider = configService.get<string>('users.provider');
   const logger = new Logger();
 
@@ -27,6 +28,14 @@ async function bootstrap() {
         durable: false,
       },
     },
+  })
+
+  app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.TCP,
+    options: {
+      host: 'localhost',
+      port: tcp
+    }
   })
 
   app.startAllMicroservices();

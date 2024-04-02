@@ -6,15 +6,16 @@ import { AuthService } from '../auth/auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from '../auth/guards/jwt.strategy';
 import { ConfigModule } from '@nestjs/config';
-import { MakeRMQServiceProvider } from '../../microservice.providers';
-import { RMQService } from '../../constants';
+import { MakeRMQServiceProvider, MakeUserTCPServiceProvider } from '../../microservice.providers';
+import { RMQService, TCPService } from '../../constants';
 
 @Module({
   imports: [
     PassportModule,
     ConfigModule.forRoot(),
     ClientsModule.register([
-      MakeRMQServiceProvider(RMQService.USERS)
+      MakeRMQServiceProvider(RMQService.USERS),
+      MakeUserTCPServiceProvider(TCPService.USERS)
     ]),
   ],
   controllers: [UsersController],

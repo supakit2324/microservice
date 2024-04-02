@@ -3,6 +3,11 @@ export enum RMQService {
   BOOKS = 'books-service',
 }
 
+export enum TCPService {
+  USERS = 'tcp-users-service',
+  BOOKS = 'tcp-books-service',
+}
+
 export const USER_CMD = 'users';
 export const CATEGORY_CMD = 'category';
 export const BOOKS_CMD = 'books';

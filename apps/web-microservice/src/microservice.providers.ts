@@ -24,3 +24,26 @@ export const MakeRMQServiceProvider = (
     },
   },
 });
+
+
+export const MakeBookTCPServiceProvider = (
+  serviceName: string,
+): ClientProviderOptions => ({
+  name: serviceName,
+  transport: Transport.TCP,
+  options: {
+    host: 'localhost',
+    port: parseInt(process.env.TCP_PORT_BOOKS)
+  },
+});
+
+export const MakeUserTCPServiceProvider = (
+  serviceName: string,
+): ClientProviderOptions => ({
+  name: serviceName,
+  transport: Transport.TCP,
+  options: {
+    host: 'localhost',
+    port: parseInt(process.env.TCP_PORT_USERS)
+  },
+});

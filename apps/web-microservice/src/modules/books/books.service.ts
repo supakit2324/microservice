@@ -5,13 +5,14 @@ import { Observable, lastValueFrom } from 'rxjs';
 import { BooksInterface } from './interfaces/books.interface';
 import { BooksQueryDto } from './dto/books-query.dto';
 import { BooksEntity } from './entities/books.entity';
-import { BOOKS_CMD, RMQService } from '../../constants';
+import { BOOKS_CMD, RMQService, TCPService } from '../../constants';
 import { PaginationResponseInterface } from 'apps/interfaces/pagination.interface';
 
 @Injectable()
 export class BooksService {
   constructor(
     @Inject(RMQService.BOOKS) private readonly booksServiceRMQ: ClientProxy,
+    @Inject(TCPService.BOOKS) private readonly booksServiceTCP: ClientProxy,
   ) {}
 
   createBook(body: CreateBooksDTO): Observable<any> {
@@ -26,7 +27,7 @@ export class BooksService {
 
   getBookName(bookName: string): Promise<BooksInterface> {
     return lastValueFrom(
-      this.booksServiceRMQ.send(
+      this.booksServiceTCP.send(
         {
           cmd: BOOKS_CMD,
           method: 'get-by-bookName',
@@ -38,7 +39,7 @@ export class BooksService {
 
   getBookById(bookId: string): Promise<BooksInterface> {
     return lastValueFrom(
-      this.booksServiceRMQ.send(
+      this.booksServiceTCP.send(
         {
           cmd: BOOKS_CMD,
           method: 'get-book-by-id',
@@ -50,7 +51,7 @@ export class BooksService {
 
   deleteBook(bookId: string): Promise<BooksInterface> {
     return lastValueFrom(
-      this.booksServiceRMQ.send(
+      this.booksServiceTCP.send(
         {
           cmd: BOOKS_CMD,
           method: 'delete-book',
@@ -64,7 +65,7 @@ export class BooksService {
     query: BooksQueryDto,
   ): Promise<PaginationResponseInterface<BooksEntity>> {
     return lastValueFrom(
-      this.booksServiceRMQ.send(
+      this.booksServiceTCP.send(
         {
           cmd: BOOKS_CMD,
           method: 'getPagination',

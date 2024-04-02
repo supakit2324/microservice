@@ -22,10 +22,10 @@ import { throttlerAsyncOptions, throttlerServiceProvider } from '../../throttler
     ThrottlerModule.forRootAsync(throttlerAsyncOptions),
     AuthModule,
     UsersModule,
-    LoginModule,
     BooksModule,
     BooksStockModule,
     OrdersModule,
+    LoginModule,
   ],
   providers: [
     throttlerServiceProvider,

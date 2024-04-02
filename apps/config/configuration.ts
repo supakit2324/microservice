@@ -44,4 +44,6 @@ export default (): any => ({
         },
     },
     rmq: process.env.RMQ || '',
+    tcpBook: parseInt(process.env.TCP_PORT_BOOKS, 10),
+    tcpUser: parseInt(process.env.TCP_PORT_USERS, 10)
 });

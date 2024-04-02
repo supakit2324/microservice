@@ -18,7 +18,7 @@ import { UserLastLoginResponseEntity } from './entities/user-last-login-respones
 import { UseRoles } from 'apps/decorators/role.decorator';
 
 @Controller('amount-login')
-@ApiTags('user-login')
+@ApiTags('amount-login')
 @ApiBearerAuth()
 export class LogginController {
   private readonly logger = new Logger(LogginController.name);

@@ -13,23 +13,6 @@ export class BooksStockService {
     return this.booksStockModel;
   }
 
-  getBookById(bookId: string): Promise<BooksStock> {
-    return this.booksStockModel.findOne({ bookId }).lean();
-  }
-
-  getAllBookInStock(): Promise<BooksStock> {
-    return this.booksStockModel
-      .find(
-        {},
-        {
-          _id: 0,
-          createdAt: 0,
-          updatedAt: 0,
-        },
-      )
-      .lean();
-  }
-
   async getPagination(
     conditions: FilterQuery<BooksStock>,
     pagination?: { page: number; perPage: number },

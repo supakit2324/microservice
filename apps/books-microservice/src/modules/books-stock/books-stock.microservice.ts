@@ -25,7 +25,7 @@ export class BooksStockMicroservice {
   })
   async getBookStockById(@Payload() bookId: string): Promise<BooksStock> {
     try {
-      return this.booksStockService.getBookById(bookId);
+      return this.booksStockService.getBooksStockModel().findOne({ bookId }).lean();
     } catch (e) {
       this.logger.error(
         `catch on get-book-stock-by-id: ${e?.message ?? JSON.stringify(e)}`,
@@ -42,7 +42,15 @@ export class BooksStockMicroservice {
   })
   async getAllBooksInStock(): Promise<BooksStock> {
     try {
-      return this.booksStockService.getAllBookInStock();
+      return this.booksStockService.getBooksStockModel().find(
+        {},
+        {
+          _id: 0,
+          createdAt: 0,
+          updatedAt: 0,
+        },
+      )
+      .lean();
     } catch (e) {
       this.logger.error(
         `catch on get-all-books-in-stock: ${e?.message ?? JSON.stringify(e)}`,

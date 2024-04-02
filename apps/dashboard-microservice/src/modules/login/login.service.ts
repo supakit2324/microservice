@@ -2,15 +2,15 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { CalendarDTO } from './dto/calendar.dto';
-import { AMOUNT_LOGIN_CMD, RMQService } from '../../constants';
+import { AMOUNT_LOGIN_CMD, RMQService, TCPService } from '../../constants';
 
 @Injectable()
 export class LoginService {
-  @Inject(RMQService.USERS) private readonly loginServiceRMQ: ClientProxy;
+  @Inject(TCPService.USERS) private readonly loginServiceTCP: ClientProxy;
 
   async getAmountUsersLogin(query: { date: Date }): Promise<CalendarDTO> {
     return lastValueFrom(
-      this.loginServiceRMQ.send(
+      this.loginServiceTCP.send(
         {
           cmd: AMOUNT_LOGIN_CMD,
           method: 'get-amount-users-login',
@@ -22,7 +22,7 @@ export class LoginService {
 
   async getLastUsersLogin(query: { date: Date }): Promise<CalendarDTO> {
     return lastValueFrom(
-      this.loginServiceRMQ.send(
+      this.loginServiceTCP.send(
         {
           cmd: AMOUNT_LOGIN_CMD,
           method: 'get-last-users-login',

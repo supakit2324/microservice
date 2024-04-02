@@ -1,4 +1,4 @@
-import { NestFactory, Reflector } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { AppModule } from './modules/app/app.module';
 import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
@@ -16,8 +16,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get<ConfigService>(ConfigService);
   const port = configService.get('dashboard.port');
+  const tcp = configService.get('tcp');
   const provider = configService.get<string>('dashboard.provider');
-  const reflector = app.get(Reflector);
   const logger = new Logger();
 
   app.useGlobalPipes(

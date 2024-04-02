@@ -6,13 +6,14 @@ import { BooksInterface } from './interfaces/books.interface';
 import { BooksQueryDto } from './dto/books-query.dto';
 import { BooksEntity } from './entities/books.entity';
 import { UpdateBookDTO } from './dto/update-book.dto';
-import { BOOKS_CMD, RMQService } from '../../constants';
+import { BOOKS_CMD, RMQService, TCPService } from '../../constants';
 import { PaginationResponseInterface } from 'apps/interfaces/pagination.interface';
 
 @Injectable()
 export class BooksService {
   constructor(
     @Inject(RMQService.BOOKS) private readonly booksServiceRMQ: ClientProxy,
+    @Inject(TCPService.BOOKS) private readonly booksServiceTCP: ClientProxy,
   ) {}
 
   createBook(body: CreateBooksDTO): Observable<CreateBooksDTO> {
@@ -22,42 +23,6 @@ export class BooksService {
         method: 'create-book',
       },
       body,
-    );
-  }
-
-  async getBookName(bookName: string): Promise<BooksInterface> {
-    return lastValueFrom(
-      this.booksServiceRMQ.send(
-        {
-          cmd: BOOKS_CMD,
-          method: 'get-by-bookName',
-        },
-        bookName,
-      ),
-    );
-  }
-
-  async getBookById(bookId: string): Promise<BooksInterface> {
-    return lastValueFrom(
-      this.booksServiceRMQ.send(
-        {
-          cmd: BOOKS_CMD,
-          method: 'get-book-by-id',
-        },
-        bookId,
-      ),
-    );
-  }
-
-  async getAllBooks(): Promise<BooksInterface[]> {
-    return lastValueFrom(
-      this.booksServiceRMQ.send(
-        {
-          cmd: BOOKS_CMD,
-          method: 'get-all-books',
-        },
-        {},
-      ),
     );
   }
 
@@ -71,6 +36,42 @@ export class BooksService {
         bookId,
         update,
       },
+    );
+  }
+
+  async getBookName(bookName: string): Promise<BooksInterface> {
+    return lastValueFrom(
+      this.booksServiceTCP.send(
+        {
+          cmd: BOOKS_CMD,
+          method: 'get-by-bookName',
+        },
+        bookName,
+      ),
+    );
+  }
+
+  async getBookById(bookId: string): Promise<BooksInterface> {
+    return lastValueFrom(
+      this.booksServiceTCP.send(
+        {
+          cmd: BOOKS_CMD,
+          method: 'get-book-by-id',
+        },
+        bookId,
+      ),
+    );
+  }
+
+  async getAllBooks(): Promise<BooksInterface[]> {
+    return lastValueFrom(
+      this.booksServiceTCP.send(
+        {
+          cmd: BOOKS_CMD,
+          method: 'get-all-books',
+        },
+        {},
+      ),
     );
   }
 
@@ -90,7 +91,7 @@ export class BooksService {
     query: BooksQueryDto,
   ): Promise<PaginationResponseInterface<BooksEntity>> {
     return lastValueFrom(
-      this.booksServiceRMQ.send(
+      this.booksServiceTCP.send(
         {
           cmd: BOOKS_CMD,
           method: 'getPagination',

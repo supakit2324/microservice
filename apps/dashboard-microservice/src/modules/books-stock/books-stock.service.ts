@@ -6,38 +6,15 @@ import { CreateBookStockDTO } from './dto/create-book-stock.dto';
 import { BooksStockQueryDto } from './dto/books-stock-query.dto';
 import { BooksStockEntity } from './entities/books-stock.entity';
 import { RunningOutQueryDTO } from './dto/running-out-query.dto';
-import { BOOKSSTOCK_CMD, RMQService } from '../../constants';
+import { BOOKSSTOCK_CMD, RMQService, TCPService } from '../../constants';
 import { PaginationResponseInterface } from 'apps/interfaces/pagination.interface';
 
 @Injectable()
 export class BooksStockService {
   constructor(
     @Inject(RMQService.BOOKS) private readonly stockServiceRMQ: ClientProxy,
+    @Inject(TCPService.BOOKS) private readonly stockServiceTCP: ClientProxy,
   ) {}
-
-  async getAllBooksInStock(): Promise<BooksStockInterface[]> {
-    return lastValueFrom(
-      this.stockServiceRMQ.send(
-        {
-          cmd: BOOKSSTOCK_CMD,
-          method: 'get-all-books-in-stock',
-        },
-        {},
-      ),
-    );
-  }
-
-  async getBookStockById(bookId: string): Promise<BooksStockInterface> {
-    return lastValueFrom(
-      this.stockServiceRMQ.send(
-        {
-          cmd: BOOKSSTOCK_CMD,
-          method: 'get-book-stock-by-id',
-        },
-        bookId,
-      ),
-    );
-  }
 
   createBookToStock(body: CreateBookStockDTO): Observable<BooksStockInterface> {
     return this.stockServiceRMQ.emit(
@@ -70,9 +47,33 @@ export class BooksStockService {
     );
   }
 
+  async getAllBooksInStock(): Promise<BooksStockInterface[]> {
+    return lastValueFrom(
+      this.stockServiceTCP.send(
+        {
+          cmd: BOOKSSTOCK_CMD,
+          method: 'get-all-books-in-stock',
+        },
+        {},
+      ),
+    );
+  }
+
+  async getBookStockById(bookId: string): Promise<BooksStockInterface> {
+    return lastValueFrom(
+      this.stockServiceTCP.send(
+        {
+          cmd: BOOKSSTOCK_CMD,
+          method: 'get-book-stock-by-id',
+        },
+        bookId,
+      ),
+    );
+  }
+
   async deleteBookToStock(bookId: string): Promise<BooksStockInterface> {
     return lastValueFrom(
-      this.stockServiceRMQ.send(
+      this.stockServiceTCP.send(
         {
           cmd: BOOKSSTOCK_CMD,
           method: 'delete-book-in-stock',
@@ -84,7 +85,7 @@ export class BooksStockService {
 
   async runningOut(query: RunningOutQueryDTO): Promise<BooksStockInterface> {
     return lastValueFrom(
-      this.stockServiceRMQ.send(
+      this.stockServiceTCP.send(
         {
           cmd: BOOKSSTOCK_CMD,
           method: 'get-running-out',
@@ -98,7 +99,7 @@ export class BooksStockService {
     query: BooksStockQueryDto,
   ): Promise<PaginationResponseInterface<BooksStockEntity>> {
     return lastValueFrom(
-      this.stockServiceRMQ.send(
+      this.stockServiceTCP.send(
         {
           cmd: BOOKSSTOCK_CMD,
           method: 'getPagination',

@@ -45,7 +45,7 @@ export class BooksMicroserive {
   })
   async getBookById(@Payload() bookId: string): Promise<Books> {
     try {
-      return await this.booksService.getBookById(bookId);
+      return await this.booksService.getBooksModel().findOne({ bookId }).lean();
     } catch (e) {
       this.logger.error(
         `catch on get-book-by-id: ${e?.message ?? JSON.stringify(e)}`,
@@ -62,7 +62,7 @@ export class BooksMicroserive {
   })
   async getByBookName(@Payload() bookName: string): Promise<Books> {
     try {
-      return await this.booksService.getBookName(bookName);
+      return await this.booksService.getBooksModel().findOne({ bookName }).lean();
     } catch (e) {
       this.logger.error(
         `catch on get-by-bookName: ${e?.message ?? JSON.stringify(e)}`,
@@ -77,9 +77,18 @@ export class BooksMicroserive {
     cmd: BOOKS_CMD,
     method: 'get-all-books',
   })
-  async getAllBooks(): Promise<Books> {
+  async getAllBooks(): Promise<Books[]> {
     try {
-      return await this.booksService.getAllBooks();
+      return await this.booksService.getBooksModel().find(
+        {},
+        {
+          _id: 0,
+          imageUrl: 0,
+          createdAt: 0,
+          updatedAt: 0,
+        },
+      )
+      .lean();;
     } catch (e) {
       this.logger.error(
         `catch on get-all-books: ${e?.message ?? JSON.stringify(e)}`,

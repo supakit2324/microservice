@@ -5,6 +5,7 @@ import { Document } from 'mongoose';
 export class AmountLogin extends Document {
   @Prop({
     type: Date,
+    index: true,
     default: new Date(),
   })
   firstTime: Date;
@@ -12,7 +13,6 @@ export class AmountLogin extends Document {
   @Prop({
     type: Number,
     index: true,
-    required: true,
     default: null,
   })
   amountLogin: number;

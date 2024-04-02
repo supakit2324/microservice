@@ -15,28 +15,6 @@ export class BooksService {
     return this.booksModel;
   }
 
-  getAllBooks(): Promise<Books> {
-    return this.booksModel
-      .find(
-        {},
-        {
-          _id: 0,
-          imageUrl: 0,
-          createdAt: 0,
-          updatedAt: 0,
-        },
-      )
-      .lean();
-  }
-
-  getBookName(bookName: string): Promise<Books> {
-    return this.booksModel.findOne({ bookName }).lean();
-  }
-
-  getBookById(bookId: string): Promise<Books> {
-    return this.booksModel.findOne({ bookId }).lean();
-  }
-
   async getPagination(
     conditions: FilterQuery<Books>,
     pagination?: { page: number; perPage: number },

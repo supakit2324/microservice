@@ -7,12 +7,13 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersInterface } from './interfaces/users.interface';
 import { UsersQueryDto } from './dto/users-query.dto';
 import { UsersQueryResponseEntity } from './entities/users-query-response.entity';
-import { RMQService, USER_CMD } from '../../constants';
+import { RMQService, TCPService, USER_CMD } from '../../constants';
 import { PaginationResponseInterface } from 'apps/interfaces/pagination.interface';
 
 @Injectable()
 export class UsersService {
   @Inject(RMQService.USERS) private readonly usersServiceQmq: ClientProxy;
+  @Inject(TCPService.USERS) private readonly usersServiceTCP: ClientProxy;
 
   registerUser(body: CreateUserDto): Observable<CreateUserDto> {
     return this.usersServiceQmq.emit(
@@ -53,38 +54,6 @@ export class UsersService {
     );
   }
 
-  async findNewUser(): Promise<UsersInterface> {
-    return lastValueFrom(
-      this.usersServiceQmq.send(
-        {
-          cmd: USER_CMD,
-          method: 'find-new-user',
-        },
-        {},
-      ),
-    );
-  }
-
-  banUser(userId: string): Observable<UsersInterface> {
-    return this.usersServiceQmq.emit(
-      {
-        cmd: USER_CMD,
-        method: 'ban-user',
-      },
-      userId,
-    );
-  }
-
-  unBanUser(userId: string): Observable<UsersInterface> {
-    return this.usersServiceQmq.emit(
-      {
-        cmd: USER_CMD,
-        method: 'un-ban-user',
-      },
-      userId,
-    );
-  }
-
   updateRole(update: {
     userId: string;
     roles: string;
@@ -98,11 +67,43 @@ export class UsersService {
     );
   }
 
+  async findNewUser(): Promise<UsersInterface> {
+    return lastValueFrom(
+      this.usersServiceTCP.send(
+        {
+          cmd: USER_CMD,
+          method: 'find-new-user',
+        },
+        {},
+      ),
+    );
+  }
+
+  banUser(userId: string): Observable<UsersInterface> {
+    return this.usersServiceTCP.emit(
+      {
+        cmd: USER_CMD,
+        method: 'ban-user',
+      },
+      userId,
+    );
+  }
+
+  unBanUser(userId: string): Observable<UsersInterface> {
+    return this.usersServiceTCP.emit(
+      {
+        cmd: USER_CMD,
+        method: 'un-ban-user',
+      },
+      userId,
+    );
+  }
+
   async getPagination(
     query: UsersQueryDto,
   ): Promise<PaginationResponseInterface<UsersQueryResponseEntity>> {
     return lastValueFrom(
-      this.usersServiceQmq.send(
+      this.usersServiceTCP.send(
         {
           cmd: USER_CMD,
           method: 'getPagination',

@@ -1,6 +1,6 @@
 FROM node:20-alpine
 
-WORKDIR /
+WORKDIR /microservice/src/app
 
 COPY package*.json ./
 
@@ -12,4 +12,4 @@ RUN npm run build
 
 EXPOSE 8080
 
-CMD ["node", "dist/main"]
+CMD ["node", "./dist/apps/books-microservice/main", "./dist/apps/users-microservice/main", "./dist/apps/web-microservice/main", "./dist/apps/dashboard-microservice/main"]

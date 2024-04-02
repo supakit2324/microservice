@@ -8,8 +8,8 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import RegisterCacheOptions from '../../cache.providers';
-import { MakeRMQServiceProvider } from '../../microservice.providers';
-import { RMQService } from '../../constants';
+import { MakeUserTCPServiceProvider } from '../../microservice.providers';
+import { TCPService } from '../../constants';
 
 @Module({
   imports: [
@@ -18,7 +18,7 @@ import { RMQService } from '../../constants';
     ConfigModule.forRoot(),
     CacheModule.registerAsync(RegisterCacheOptions),
     ClientsModule.register([
-      MakeRMQServiceProvider(RMQService.USERS)
+      MakeUserTCPServiceProvider(TCPService.USERS)
     ])
   ],
   controllers: [AuthController],

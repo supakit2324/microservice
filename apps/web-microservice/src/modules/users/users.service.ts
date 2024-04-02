@@ -5,14 +5,15 @@ import { Observable } from 'rxjs';
 import { ChangePasswordEntity } from './entities/change-password.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersInterface } from './interfaces/users.interface';
-import { RMQService, USER_CMD } from '../../constants';
+import { RMQService, TCPService, USER_CMD } from '../../constants';
 
 @Injectable()
 export class UsersService {
-  @Inject(RMQService.USERS) private readonly usersServiceQmq: ClientProxy;
+  @Inject(RMQService.USERS) private readonly usersServiceRMQ: ClientProxy;
+  @Inject(TCPService.USERS) private readonly usersServiceTCP: ClientProxy;
 
   registerUser(body: CreateUserDto): Observable<CreateUserDto> {
-    return this.usersServiceQmq.emit(
+    return this.usersServiceRMQ.emit(
       {
         cmd: USER_CMD,
         method: 'register',
@@ -25,7 +26,7 @@ export class UsersService {
     userId: string,
     hashPassword: string,
   ): Observable<ChangePasswordEntity> {
-    return this.usersServiceQmq.emit(
+    return this.usersServiceRMQ.emit(
       {
         cmd: USER_CMD,
         method: 'changePassword',
@@ -41,7 +42,7 @@ export class UsersService {
     userId: string,
     update: UpdateUserDto,
   ): Observable<UsersInterface> {
-    return this.usersServiceQmq.emit(
+    return this.usersServiceRMQ.emit(
       {
         cmd: USER_CMD,
         method: 'updateUser',
