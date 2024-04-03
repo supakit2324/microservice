@@ -8,6 +8,7 @@ import { BooksController } from './books.controller';
 import { ConfigModule } from '@nestjs/config';
 import { MakeRMQServiceProvider, MakeBookTCPServiceProvider } from '../../microservice.providers';
 import { RMQService, TCPService } from '../../constants';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { RMQService, TCPService } from '../../constants';
     PassportModule,
     CacheModule.register(),
     ConfigModule.forRoot(),
+    ThrottlerModule.forRoot(),
     ClientsModule.register([
       MakeRMQServiceProvider(RMQService.BOOKS),
       MakeBookTCPServiceProvider(TCPService.BOOKS)

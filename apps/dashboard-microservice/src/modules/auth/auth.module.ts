@@ -7,9 +7,9 @@ import { JwtStrategy } from './guards/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
-import RegisterCacheOptions from '../../cache.providers';
 import { MakeUserTCPServiceProvider } from '../../microservice.providers';
 import { TCPService } from '../../constants';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
@@ -17,6 +17,7 @@ import { TCPService } from '../../constants';
     PassportModule,
     ConfigModule.forRoot(),
     CacheModule.register(),
+    ThrottlerModule.forRoot(),
     ClientsModule.register([
       MakeUserTCPServiceProvider(TCPService.USERS)
     ])

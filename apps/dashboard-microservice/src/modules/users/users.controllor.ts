@@ -31,6 +31,7 @@ import { ReportUserEntity } from './entities/report-users.entity';
 import { UseRoles } from 'apps/decorators/role.decorator';
 import ReqUser from 'apps/decorators/req-user.decorator';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import { SkipThrottle, Throttle } from '@nestjs/throttler';
 
 @Controller('users')
 @ApiTags('user')

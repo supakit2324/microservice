@@ -10,7 +10,7 @@ import { OrdersModule } from '../orders/orders.module';
 import { LoginModule } from '../login/login.module';
 import configuration from 'apps/config/configuration';
 import RegisterCacheOptions, { cachingServiceProvider } from '../../cache.providers';
-import { throttlerAsyncOptions, throttlerServiceProvider } from '../../throttler.providers';
+import throttlerAsyncOptions, { throttlerServiceProvider } from '../../throttler.providers';
 
 @Module({
   imports: [
@@ -18,8 +18,12 @@ import { throttlerAsyncOptions, throttlerServiceProvider } from '../../throttler
       load: [configuration],
       isGlobal: true,
     }),
-    CacheModule.registerAsync(RegisterCacheOptions),
-    ThrottlerModule.forRootAsync(throttlerAsyncOptions),
+    CacheModule.registerAsync(
+      RegisterCacheOptions,
+    ),
+    ThrottlerModule.forRootAsync(
+      throttlerAsyncOptions
+    ),
     AuthModule,
     UsersModule,
     BooksModule,
@@ -32,4 +36,4 @@ import { throttlerAsyncOptions, throttlerServiceProvider } from '../../throttler
     throttlerServiceProvider,
   ],
 })
-export class AppModule {}
+export class AppModule { }

@@ -9,12 +9,14 @@ import { ConfigModule } from '@nestjs/config';
 import { MakeRMQServiceProvider, MakeUserTCPServiceProvider } from '../../microservice.providers';
 import { RMQService, TCPService } from '../../constants';
 import { CacheModule } from '@nestjs/cache-manager';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
     PassportModule,
     ConfigModule.forRoot(),
     CacheModule.register(),
+    ThrottlerModule.forRoot(),
     ClientsModule.register([
       MakeRMQServiceProvider(RMQService.USERS),
       MakeUserTCPServiceProvider(TCPService.USERS)

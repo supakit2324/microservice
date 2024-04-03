@@ -10,12 +10,14 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { MakeRMQServiceProvider, MakeBookTCPServiceProvider } from '../../microservice.providers';
 import { RMQService, TCPService } from '../../constants';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
     JwtModule,
     PassportModule,
     ConfigModule.forRoot(),
+    ThrottlerModule.forRoot(),
     CacheModule.register(),
     ClientsModule.register([
       MakeRMQServiceProvider(RMQService.BOOKS),

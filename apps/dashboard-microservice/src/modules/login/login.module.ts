@@ -6,11 +6,13 @@ import { ConfigModule } from '@nestjs/config';
 import { MakeUserTCPServiceProvider } from '../../microservice.providers';
 import { TCPService } from '../../constants';
 import { CacheModule } from '@nestjs/cache-manager';
+import { ThrottlerModule } from '@nestjs/throttler';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     CacheModule.register(),
+    ThrottlerModule.forRoot(),
     ClientsModule.register([
       MakeUserTCPServiceProvider(TCPService.USERS)
     ])
