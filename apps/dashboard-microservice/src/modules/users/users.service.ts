@@ -12,11 +12,11 @@ import { PaginationResponseInterface } from 'apps/interfaces/pagination.interfac
 
 @Injectable()
 export class UsersService {
-  @Inject(RMQService.USERS) private readonly usersServiceQmq: ClientProxy;
+  @Inject(RMQService.USERS) private readonly usersServiceRMQ: ClientProxy;
   @Inject(TCPService.USERS) private readonly usersServiceTCP: ClientProxy;
 
   registerUser(body: CreateUserDto): Observable<CreateUserDto> {
-    return this.usersServiceQmq.emit(
+    return this.usersServiceRMQ.emit(
       {
         cmd: USER_CMD,
         method: 'register',
@@ -29,7 +29,7 @@ export class UsersService {
     userId: string,
     hashPassword: string,
   ): Observable<ChangePasswordEntity> {
-    return this.usersServiceQmq.emit(
+    return this.usersServiceRMQ.emit(
       {
         cmd: USER_CMD,
         method: 'changePassword',
@@ -42,7 +42,7 @@ export class UsersService {
   }
 
   updateUser(userId: string, update: UpdateUserDto): Observable<UpdateUserDto> {
-    return this.usersServiceQmq.emit(
+    return this.usersServiceRMQ.emit(
       {
         cmd: USER_CMD,
         method: 'updateUser',
@@ -58,7 +58,7 @@ export class UsersService {
     userId: string;
     roles: string;
   }): Observable<UsersInterface> {
-    return this.usersServiceQmq.emit(
+    return this.usersServiceRMQ.emit(
       {
         cmd: USER_CMD,
         method: 'update-role',
