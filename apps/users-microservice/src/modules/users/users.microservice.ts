@@ -1,7 +1,9 @@
 import {
   Controller,
+  Inject,
   InternalServerErrorException,
   Logger,
+  UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
@@ -14,6 +16,7 @@ import StatusUser from './enum/status-user.enum';
 import { USER_CMD } from '../../constants';
 import { FindOptionsInterface } from 'apps/interfaces/find-options.interface';
 import { PaginationInterface, PaginationResponseInterface } from 'apps/interfaces/pagination.interface';
+import { CACHE_MANAGER, CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('users')
 export class UsersMicroserviec {
@@ -21,6 +24,7 @@ export class UsersMicroserviec {
   constructor(
     private readonly usersService: UsersService,
     private readonly authService: AuthService,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache
   ) { }
 
   @MessagePattern({

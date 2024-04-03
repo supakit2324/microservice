@@ -11,7 +11,7 @@ import * as bcrypt from 'bcrypt';
 import { AuthGuard } from '@nestjs/passport';
 import { plainToInstance } from 'class-transformer';
 import { LoginUserDto } from '../dto/user-login.dto';
-import { Cache } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { AuthService } from '../auth.service';
 import { UsersInterface } from '../../users/interfaces/users.interface';

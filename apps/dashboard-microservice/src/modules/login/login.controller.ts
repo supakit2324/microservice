@@ -6,6 +6,7 @@ import {
   NotFoundException,
   Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LoginService } from './login.service';
@@ -16,14 +17,18 @@ import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
 import { RolesUserEnum } from '../users/enum/roles-user.enum';
 import { UserLastLoginResponseEntity } from './entities/user-last-login-respones.entity';
 import { UseRoles } from 'apps/decorators/role.decorator';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('amount-login')
 @ApiTags('amount-login')
 @ApiBearerAuth()
+@UseInterceptors(CacheInterceptor)
+@CacheTTL(6000)
 export class LogginController {
   private readonly logger = new Logger(LogginController.name);
-
-  constructor(private readonly loginService: LoginService) {}
+  constructor(
+    private readonly loginService: LoginService
+  ) {}
 
   @Get('amount-users-login')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)

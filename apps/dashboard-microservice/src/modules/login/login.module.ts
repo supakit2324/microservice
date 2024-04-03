@@ -5,10 +5,12 @@ import { LogginController } from './login.controller';
 import { ConfigModule } from '@nestjs/config';
 import { MakeUserTCPServiceProvider } from '../../microservice.providers';
 import { TCPService } from '../../constants';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
+    CacheModule.register(),
     ClientsModule.register([
       MakeUserTCPServiceProvider(TCPService.USERS)
     ])

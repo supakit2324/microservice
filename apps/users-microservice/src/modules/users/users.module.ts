@@ -7,9 +7,13 @@ import { JwtService } from '@nestjs/jwt';
 import { AuthService } from '../auth/auth.service';
 import { model } from '../models/model';
 import { DB_CONNECTION_NAME } from '../../constants';
+import { CacheModule } from '@nestjs/cache-manager';
 
 @Module({
-  imports: [MongooseModule.forFeature(model, DB_CONNECTION_NAME)],
+  imports: [
+    MongooseModule.forFeature(model, DB_CONNECTION_NAME),
+    CacheModule.register()
+  ],
   controllers: [UsersMicroserviec],
   providers: [
     UsersService,

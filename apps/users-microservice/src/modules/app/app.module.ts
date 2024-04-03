@@ -8,6 +8,8 @@ import { LoginModule } from '../login/login.module';
 import configuration from 'apps/config/configuration';
 import { mongooseModuleAsyncOptions } from '../../mongoose.providers';
 import { throttlerAsyncOptions, throttlerServiceProvider } from '../../throttler.providers';
+import { CacheModule } from '@nestjs/cache-manager';
+import RegisterCacheOptions from '../../cache.providers';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -16,6 +18,7 @@ import { throttlerAsyncOptions, throttlerServiceProvider } from '../../throttler
     }),
     MongooseModule.forRootAsync(mongooseModuleAsyncOptions),
     ThrottlerModule.forRootAsync(throttlerAsyncOptions),
+    CacheModule.registerAsync(RegisterCacheOptions),
     UsersModule,
     AuthModule,
     LoginModule,

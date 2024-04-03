@@ -3,7 +3,6 @@ import {
   Controller,
   Inject,
   InternalServerErrorException,
-  Logger,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -17,7 +16,6 @@ import { UsersLoginEntity } from './entities/user-login-entity';
 @Controller('auth')
 @ApiTags('auth')
 export class AuthController {
-  private readonly logger = new Logger(AuthController.name);
   constructor(@Inject(AuthService) private readonly authService: AuthService) {}
 
   @Post('login')

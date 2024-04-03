@@ -1,19 +1,23 @@
 import { CacheModuleAsyncOptions } from '@nestjs/common/cache/interfaces/cache-module.interface';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import redisStore from 'cache-manager-redis-store';
+import { APP_GUARD } from '@nestjs/core';
+import { ThrottlerGuard } from '@nestjs/throttler';
+import { redisStore } from "cache-manager-redis-store";
+import { RedisClientOptions } from 'redis';
 
-const RegisterCacheOptions: CacheModuleAsyncOptions = {
+const RegisterCacheOptions: CacheModuleAsyncOptions = ({
   isGlobal: true,
   imports: [ConfigModule],
-  useFactory: async (configService: ConfigService) => {
-    return {
-      store: redisStore,
-      host: configService.get<string>('redis.host'),
-      port: configService.get<number>('redis.port'),
-      ttl: configService.get('cache_ttl') || 5,
-    };
-  },
   inject: [ConfigService],
-};
-
+  useFactory: async (configService: ConfigService) => ({
+    store: redisStore,
+    host: configService.get<string>('redis.host'),
+    port: configService.get<number>('redis.port'),
+  } as RedisClientOptions)
+})
 export default RegisterCacheOptions;
+
+export const cachingServiceProvider = {
+  provide: APP_GUARD,
+  useClass: ThrottlerGuard
+}

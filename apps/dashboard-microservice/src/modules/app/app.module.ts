@@ -9,7 +9,7 @@ import { BooksStockModule } from '../books-stock/books-stock.module';
 import { OrdersModule } from '../orders/orders.module';
 import { LoginModule } from '../login/login.module';
 import configuration from 'apps/config/configuration';
-import RegisterCacheOptions from '../../cache.providers';
+import RegisterCacheOptions, { cachingServiceProvider } from '../../cache.providers';
 import { throttlerAsyncOptions, throttlerServiceProvider } from '../../throttler.providers';
 
 @Module({
@@ -28,6 +28,7 @@ import { throttlerAsyncOptions, throttlerServiceProvider } from '../../throttler
     LoginModule,
   ],
   providers: [
+    cachingServiceProvider,
     throttlerServiceProvider,
   ],
 })

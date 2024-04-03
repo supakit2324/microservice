@@ -4,15 +4,19 @@ import {
   InternalServerErrorException,
   Logger,
   Query,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BooksService } from './books.service';
 import BooksQueryEntity from './entities/books-query.entity';
 import { BooksQueryDto } from './dto/books-query.dto';
 import { BooksCategoryUtil } from '../utils/books';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('books')
 @ApiTags('books')
+@UseInterceptors(CacheInterceptor)
+@CacheTTL(60000)
 export class BooksController {
   private readonly logger = new Logger(BooksController.name);
 

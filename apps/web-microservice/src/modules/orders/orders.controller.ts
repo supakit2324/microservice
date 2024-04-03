@@ -9,7 +9,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { OrdersService } from './orders.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { CreateOrderBooksValidationPipe } from './pipe/buy-books-validation.pipe';
@@ -30,6 +30,8 @@ import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard, JwtRoleGuard)
 @UseRoles(RolesUserEnum.USER, RolesUserEnum.ADMIN)
+@UseInterceptors(CacheInterceptor)
+@CacheTTL(6000)
 export class OrdersController {
   private readonly logger = new Logger(OrdersController.name);
   constructor(
@@ -42,12 +44,6 @@ export class OrdersController {
     status: 200,
     type: CreateOrderEntity,
   })
-  @ApiOperation({
-    summary: 'Buy a book'
-  })
-  @UseInterceptors(CacheInterceptor)
-  @CacheKey("GCI-key")
-  @CacheTTL(60000)
   async buyBook(
     @Body(CreateOrderBooksValidationPipe) body: CreateOrderDTO,
     @ReqUser() user: UsersInterface,

@@ -5,6 +5,7 @@ import {
   Post,
   Logger,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiBody, ApiTags, ApiResponse } from '@nestjs/swagger';
 import { LoginUserDto } from '../auth/dto/user-login.dto';
@@ -13,6 +14,7 @@ import { LoginAuthGuard } from './guards/login-auth.guard';
 import { UsersLoginEntity } from './entities/user-login-entity';
 import { LoginService } from '../login/login.service';
 import { AmountLoginDTO } from '../login/dto/login.dto';
+import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @Controller('auth')
 @ApiTags('auth')
@@ -23,6 +25,7 @@ export class AuthController {
     private readonly loginService: LoginService,
   ) {}
 
+  @UseInterceptors(CacheInterceptor)
   @Post('login')
   @UseGuards(LoginAuthGuard)
   @ApiBody({

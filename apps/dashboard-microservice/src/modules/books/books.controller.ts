@@ -10,6 +10,7 @@ import {
   Query,
   UseGuards,
   Put,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiBody, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { BooksService } from './books.service';
@@ -26,12 +27,15 @@ import { UpdateBookValidationPipe } from './pipe/update-book-validation.pipe';
 import { RolesUserEnum } from '../users/enum/roles-user.enum';
 import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
 import { UseRoles } from 'apps/decorators/role.decorator';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('books')
 @ApiTags('books')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard, JwtRoleGuard)
 @UseRoles(RolesUserEnum.ADMIN)
+@UseInterceptors(CacheInterceptor)
+@CacheTTL(6000)
 export class BooksController {
   private readonly logger = new Logger(BooksController.name);
 

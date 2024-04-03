@@ -17,7 +17,7 @@ import { RMQService, TCPService } from '../../constants';
     JwtModule,
     PassportModule,
     ConfigModule.forRoot(),
-    CacheModule.registerAsync(RegisterCacheOptions),
+    CacheModule.register(),
     ClientsModule.register([
       MakeRMQServiceProvider(RMQService.USERS),
       MakeUserTCPServiceProvider(TCPService.USERS)
@@ -27,7 +27,7 @@ import { RMQService, TCPService } from '../../constants';
   providers: [ 
     AuthService,
     JwtStrategy,
-    LoginService
+    LoginService,
   ],
   exports: [
     AuthService,

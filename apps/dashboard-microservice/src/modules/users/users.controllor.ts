@@ -9,6 +9,7 @@ import {
   Put,
   Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiBody, ApiTags, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { Payload } from '@nestjs/microservices';
@@ -29,9 +30,12 @@ import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
 import { ReportUserEntity } from './entities/report-users.entity';
 import { UseRoles } from 'apps/decorators/role.decorator';
 import ReqUser from 'apps/decorators/req-user.decorator';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('users')
 @ApiTags('user')
+@UseInterceptors(CacheInterceptor)
+@CacheTTL(6000)
 export class UsersController {
   private readonly logger = new Logger(UsersController.name);
   constructor(private readonly usersService: UsersService) {}

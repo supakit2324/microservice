@@ -5,6 +5,7 @@ import {
   Logger,
   Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { OrdersService } from './orders.service';
@@ -25,10 +26,13 @@ import { OrdersQueryByCategoryDTO } from './dto/orders-query-category.dto';
 import { BooksCategoryUtil } from '../utils/books';
 import { UseRoles } from 'apps/decorators/role.decorator';
 import { PageQueryDto } from '../../dto/query.dto';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('orders')
 @ApiTags('orders')
 @ApiBearerAuth()
+@UseInterceptors(CacheInterceptor)
+@CacheTTL(6000)
 export class OrdersController {
   private readonly logger = new Logger(OrdersController.name);
   constructor(

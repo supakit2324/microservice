@@ -10,7 +10,7 @@ export const throttlerAsyncOptions: ThrottlerAsyncOptions = {
   inject: [ConfigService],
   useFactory: (configService: ConfigService) => [
     {
-      ttl: 1000,
+      ttl: 3000,
       limit: 5,
       storage: new ThrottlerStorageRedisService({
         port: configService.get<number>('redis.port'),

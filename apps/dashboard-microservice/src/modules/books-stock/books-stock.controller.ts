@@ -10,6 +10,7 @@ import {
   Put,
   Query,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { BooksStockService } from './books-stock.service';
 import {
@@ -33,12 +34,15 @@ import { RolesUserEnum } from '../users/enum/roles-user.enum';
 import { RunningOutQueryDTO } from './dto/running-out-query.dto';
 import { RunningOutEntity } from './entities/running-out.entity';
 import { UseRoles } from 'apps/decorators/role.decorator';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('books-stock')
 @ApiTags('books-stock')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard, JwtRoleGuard)
 @UseRoles(RolesUserEnum.ADMIN)
+@UseInterceptors(CacheInterceptor)
+@CacheTTL(6000)
 export class BooksStockController {
   private readonly logger = new Logger(BooksStockController.name);
 

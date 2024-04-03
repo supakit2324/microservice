@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { ApiBody, ApiTags, ApiBearerAuth, ApiResponse } from '@nestjs/swagger';
 import { UsersService } from './users.service';
@@ -22,9 +23,12 @@ import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
 import { UseRoles } from 'apps/decorators/role.decorator';
 import ReqUser from 'apps/decorators/req-user.decorator';
 import { RolesUserEnum } from 'apps/web-microservice/src/modules/users/enum/roles-user.enum';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('users')
 @ApiTags('user')
+@UseInterceptors(CacheInterceptor)
+@CacheTTL(60000)
 export class UsersController {
   private readonly logger = new Logger(UsersController.name);
   constructor(private readonly usersService: UsersService) {}
@@ -82,6 +86,7 @@ export class UsersController {
       });
     }
   }
+
 
   @Put('change-password')
   @ApiBody({

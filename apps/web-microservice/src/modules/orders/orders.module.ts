@@ -5,11 +5,13 @@ import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
 import { BooksStockService } from '../books-stock/books-stock.service';
 import { BooksService } from '../books/books.service';
-import { CacheModule } from '@nestjs/cache-manager';
+import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { MakeBookTCPServiceProvider, MakeRMQServiceProvider } from '../../microservice.providers';
 import { RMQService, TCPService } from '../../constants';
+import RegisterCacheOptions from '../../cache.providers';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -24,6 +26,10 @@ import { RMQService, TCPService } from '../../constants';
     ]),
   ],
   controllers: [OrdersController],
-  providers: [OrdersService, BooksStockService, BooksService],
+  providers: [
+    OrdersService,
+    BooksStockService,
+    BooksService,
+  ],
 })
 export class OrdersModule {}
