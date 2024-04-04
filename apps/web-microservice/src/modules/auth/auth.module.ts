@@ -6,7 +6,6 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { JwtStrategy } from './guards/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { LoginService } from '../login/login.service';
 import { ConfigModule } from '@nestjs/config';
 import {
   MakeRMQServiceProvider,
@@ -26,7 +25,10 @@ import { RMQService, TCPService } from '../../constants';
     ]),
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, LoginService],
+  providers: [
+    AuthService,
+    JwtStrategy
+  ],
   exports: [AuthService, JwtStrategy],
 })
 export class AuthModule {}

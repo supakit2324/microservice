@@ -7,7 +7,6 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { BooksModule } from '../books/books.module';
 import { BooksStockModule } from '../books-stock/books-stock.module';
 import { OrdersModule } from '../orders/orders.module';
-import { LoginModule } from '../login/login.module';
 import {
   throttlerAsyncOptions,
   throttlerServiceProvider,
@@ -31,7 +30,6 @@ import configuration from '../../config/configuration';
     BooksModule,
     BooksStockModule,
     OrdersModule,
-    LoginModule,
   ],
   providers: [cachingServiceProvider, throttlerServiceProvider],
 })

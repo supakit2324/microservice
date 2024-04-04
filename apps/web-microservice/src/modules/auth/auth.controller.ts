@@ -12,8 +12,6 @@ import { LoginUserDto } from '../auth/dto/user-login.dto';
 import { AuthService } from '../auth/auth.service';
 import { LoginAuthGuard } from './guards/login-auth.guard';
 import { UsersLoginEntity } from './entities/user-login-entity';
-import { LoginService } from '../login/login.service';
-import { AmountLoginDTO } from '../login/dto/login.dto';
 import { CacheInterceptor } from '@nestjs/cache-manager';
 
 @Controller('auth')
@@ -22,7 +20,6 @@ export class AuthController {
   private readonly logger = new Logger(AuthController.name);
   constructor(
     private readonly authService: AuthService,
-    private readonly loginService: LoginService,
   ) {}
 
   @UseInterceptors(CacheInterceptor)
@@ -37,14 +34,10 @@ export class AuthController {
   })
   async loginUser(
     @Body() body: LoginUserDto,
-    payload: AmountLoginDTO = { amountLogin: 1 },
   ) {
     const { email, password } = body;
     try {
       const auth = await this.authService.loginUser(email, password);
-      if (auth) {
-        await this.loginService.updateAmountLogin(payload);
-      }
       return auth;
     } catch (e) {
       throw new InternalServerErrorException({
