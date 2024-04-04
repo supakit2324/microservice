@@ -26,9 +26,7 @@ import { UseRoles } from '@Libs/common/index';
 @CacheTTL(6000)
 export class LogginController {
   private readonly logger = new Logger(LogginController.name);
-  constructor(
-    private readonly loginService: LoginService
-  ) {}
+  constructor(private readonly loginService: LoginService) {}
 
   @Get('users-login')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)

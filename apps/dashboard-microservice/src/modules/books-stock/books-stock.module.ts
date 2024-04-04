@@ -7,7 +7,10 @@ import { BooksStockService } from './books-stock.service';
 import { BooksStockController } from './books-stock.controller';
 import { BooksService } from '../books/books.service';
 import { ConfigModule } from '@nestjs/config';
-import { MakeRMQServiceProvider, MakeBookTCPServiceProvider } from "@Libs/common/index"
+import {
+  MakeRMQServiceProvider,
+  MakeBookTCPServiceProvider,
+} from '@Libs/common/index';
 import { RMQService, TCPService } from '../../constants';
 import { ThrottlerModule } from '@nestjs/throttler';
 
@@ -20,8 +23,8 @@ import { ThrottlerModule } from '@nestjs/throttler';
     ThrottlerModule.forRoot(),
     ClientsModule.register([
       MakeRMQServiceProvider(RMQService.BOOKS),
-      MakeBookTCPServiceProvider(TCPService.BOOKS)
-    ])
+      MakeBookTCPServiceProvider(TCPService.BOOKS),
+    ]),
   ],
   controllers: [BooksStockController],
   providers: [BooksStockService, BooksService],

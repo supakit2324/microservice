@@ -4,7 +4,7 @@ import { LoginUserDto } from './dto/user-login.dto';
 import { lastValueFrom } from 'rxjs';
 import { UsersInterface } from '../users/interfaces/users.interface';
 import { UsersLoginEntity } from './entities/user-login-entity';
-import { RMQService, TCPService, USER_CMD } from '../../constants';
+import { TCPService, USER_CMD } from '../../constants';
 
 @Injectable()
 export class AuthService {

@@ -1,12 +1,12 @@
 interface TopSellCategoryItemInterface {
-    bookId: string;
-    bookName: string;
-    imageUrl: string;
-    price: number;
-    quantity: number;
+  bookId: string;
+  bookName: string;
+  imageUrl: string;
+  price: number;
+  quantity: number;
 }
 
 export interface TopSellCategoryInterface {
-    category: string
-    topSeller: TopSellCategoryItemInterface[]
+  category: string;
+  topSeller: TopSellCategoryItemInterface[];
 }

@@ -22,7 +22,7 @@ import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
 import { CreateOrderEntity } from './entities/create-order.entity';
 import { RolesUserEnum } from '@Libs/common/index';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
-import { UseRoles, ReqUser } from "@Libs/common/index"
+import { UseRoles, ReqUser } from '@Libs/common/index';
 
 @Controller('orders')
 @ApiTags('user')

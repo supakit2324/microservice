@@ -8,7 +8,10 @@ import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { LoginService } from '../login/login.service';
 import { ConfigModule } from '@nestjs/config';
-import { MakeRMQServiceProvider, MakeUserTCPServiceProvider } from '@Libs/common/index'
+import {
+  MakeRMQServiceProvider,
+  MakeUserTCPServiceProvider,
+} from '@Libs/common/index';
 import { RMQService, TCPService } from '../../constants';
 
 @Module({
@@ -19,18 +22,11 @@ import { RMQService, TCPService } from '../../constants';
     CacheModule.register(),
     ClientsModule.register([
       MakeRMQServiceProvider(RMQService.USERS),
-      MakeUserTCPServiceProvider(TCPService.USERS)
+      MakeUserTCPServiceProvider(TCPService.USERS),
     ]),
   ],
   controllers: [AuthController],
-  providers: [ 
-    AuthService,
-    JwtStrategy,
-    LoginService,
-  ],
-  exports: [
-    AuthService,
-    JwtStrategy
-  ],
+  providers: [AuthService, JwtStrategy, LoginService],
+  exports: [AuthService, JwtStrategy],
 })
 export class AuthModule {}

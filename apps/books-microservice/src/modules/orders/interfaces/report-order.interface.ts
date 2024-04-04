@@ -1,5 +1,5 @@
 export interface ReportOrderInterface {
-    totalPrice: number,
-    count: number,
-    date: Date
+  totalPrice: number;
+  count: number;
+  date: Date;
 }

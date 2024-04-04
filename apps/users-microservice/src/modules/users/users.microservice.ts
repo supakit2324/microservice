@@ -11,8 +11,12 @@ import { LoginInterface } from '../auth/interface/login.interface';
 import { Users } from './users.schema';
 import { PayloadUpdateUserInterface } from './interface/payload-update-user.interface';
 import { USER_CMD } from '../../constants';
-import { PaginationResponseInterface, PaginationInterface, FindOptionsInterface } from '@Libs/common/index'
-import { RolesUserEnum, StatusUser } from '@Libs/common/index'
+import {
+  PaginationResponseInterface,
+  PaginationInterface,
+  FindOptionsInterface,
+} from '@Libs/common/index';
+import { RolesUserEnum, StatusUser } from '@Libs/common/index';
 
 @Controller('users')
 export class UsersMicroserviec {
@@ -20,7 +24,7 @@ export class UsersMicroserviec {
   constructor(
     private readonly usersService: UsersService,
     private readonly authService: AuthService,
-  ) { }
+  ) {}
 
   @MessagePattern({
     cmd: USER_CMD,
@@ -40,7 +44,6 @@ export class UsersMicroserviec {
         message: e?.message ?? e,
       });
     }
-
 
     const update = {
       accessToken: jwtSign.accessToken,
@@ -209,7 +212,7 @@ export class UsersMicroserviec {
   })
   async deleteUser(@Payload() userId: string): Promise<void> {
     try {
-      await this.usersService.getUserModel().deleteOne({ userId }).exec()
+      await this.usersService.getUserModel().deleteOne({ userId }).exec();
     } catch (e) {
       this.logger.error(
         `catch on deleteUser: ${e?.message ?? JSON.stringify(e)}`,

@@ -9,7 +9,10 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
 import { RMQService, TCPService } from '../../constants';
-import { MakeRMQServiceProvider, MakeBookTCPServiceProvider } from '@Libs/common/index'
+import {
+  MakeRMQServiceProvider,
+  MakeBookTCPServiceProvider,
+} from '@Libs/common/index';
 @Module({
   imports: [
     JwtModule,
@@ -19,14 +22,10 @@ import { MakeRMQServiceProvider, MakeBookTCPServiceProvider } from '@Libs/common
     ClientsModule.register([
       MakeRMQServiceProvider(RMQService.BOOKS),
       MakeRMQServiceProvider(RMQService.USERS),
-      MakeBookTCPServiceProvider(TCPService.BOOKS)
+      MakeBookTCPServiceProvider(TCPService.BOOKS),
     ]),
   ],
   controllers: [OrdersController],
-  providers: [
-    OrdersService,
-    BooksStockService,
-    BooksService,
-  ],
+  providers: [OrdersService, BooksStockService, BooksService],
 })
 export class OrdersModule {}

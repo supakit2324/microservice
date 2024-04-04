@@ -22,7 +22,7 @@ import { registerUserValidationPipe } from './pipes/register-user-validation.pip
 import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
 import { RolesUserEnum } from '@Libs/common/index';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
-import { UseRoles, ReqUser } from "@Libs/common/index"
+import { UseRoles, ReqUser } from '@Libs/common/index';
 
 @Controller('users')
 @ApiTags('user')
@@ -85,7 +85,6 @@ export class UsersController {
       });
     }
   }
-
 
   @Put('change-password')
   @ApiBody({

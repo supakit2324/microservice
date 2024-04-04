@@ -8,9 +8,15 @@ import { BooksModule } from '../books/books.module';
 import { BooksStockModule } from '../books-stock/books-stock.module';
 import { OrdersModule } from '../orders/orders.module';
 import { LoginModule } from '../login/login.module';
-import { throttlerAsyncOptions, throttlerServiceProvider } from '@Libs/common/index'
+import {
+  throttlerAsyncOptions,
+  throttlerServiceProvider,
+} from '@Libs/common/index';
 import configuration from '../../config/configuration';
-import { RegisterCacheOptions, cachingServiceProvider } from '@Libs/common/index'
+import {
+  RegisterCacheOptions,
+  cachingServiceProvider,
+} from '@Libs/common/index';
 
 @Module({
   imports: [
@@ -18,12 +24,8 @@ import { RegisterCacheOptions, cachingServiceProvider } from '@Libs/common/index
       load: [configuration],
       isGlobal: true,
     }),
-    CacheModule.registerAsync(
-      RegisterCacheOptions,
-    ),
-    ThrottlerModule.forRootAsync(
-      throttlerAsyncOptions
-    ),
+    CacheModule.registerAsync(RegisterCacheOptions),
+    ThrottlerModule.forRootAsync(throttlerAsyncOptions),
     AuthModule,
     UsersModule,
     BooksModule,
@@ -31,9 +33,6 @@ import { RegisterCacheOptions, cachingServiceProvider } from '@Libs/common/index
     OrdersModule,
     LoginModule,
   ],
-  providers: [
-    cachingServiceProvider,
-    throttlerServiceProvider,
-  ],
+  providers: [cachingServiceProvider, throttlerServiceProvider],
 })
-export class AppModule { }
+export class AppModule {}

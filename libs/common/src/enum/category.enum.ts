@@ -15,5 +15,3 @@ export enum CategoryEnum {
   SPORTS = 'Sports',
   TRAVEL = 'Travel',
 }
-
-

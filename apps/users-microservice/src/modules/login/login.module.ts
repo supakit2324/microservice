@@ -10,10 +10,6 @@ import { model } from '../models/model';
 @Module({
   imports: [MongooseModule.forFeature(model, DB_CONNECTION_NAME)],
   controllers: [LoginMicroservice],
-  providers: [
-    LoginService,
-    UsersService,
-    JwtService
-  ],
+  providers: [LoginService, UsersService, JwtService],
 })
 export class LoginModule {}

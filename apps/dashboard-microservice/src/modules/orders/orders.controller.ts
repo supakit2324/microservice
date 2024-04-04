@@ -70,10 +70,12 @@ export class OrdersController {
     description: 'Success',
     type: OrdersQueryByCategoryEntity,
   })
-  async getOrdersByCategory(@Query() query: OrdersQueryByCategoryDTO): Promise<OrdersQueryByCategoryEntity> {
-    query.filter = BooksCategoryUtil.getQueryByCategory(query.category)
+  async getOrdersByCategory(
+    @Query() query: OrdersQueryByCategoryDTO,
+  ): Promise<OrdersQueryByCategoryEntity> {
+    query.filter = BooksCategoryUtil.getQueryByCategory(query.category);
     try {
-      return await this.ordersService.getOrderByCategory(query)
+      return await this.ordersService.getOrderByCategory(query);
     } catch (e) {
       this.logger.error(
         `catch on orders-by-category: ${e?.message ?? JSON.stringify(e)}`,

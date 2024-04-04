@@ -8,7 +8,10 @@ import { JwtStrategy } from '../auth/guards/jwt.strategy';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule } from '@nestjs/config';
 import { RMQService, TCPService } from '../../constants';
-import { MakeRMQServiceProvider, MakeUserTCPServiceProvider } from "@Libs/common/index";
+import {
+  MakeRMQServiceProvider,
+  MakeUserTCPServiceProvider,
+} from '@Libs/common/index';
 
 @Module({
   imports: [
@@ -18,7 +21,7 @@ import { MakeRMQServiceProvider, MakeUserTCPServiceProvider } from "@Libs/common
     ClientsModule.register([
       MakeRMQServiceProvider(RMQService.USERS),
       MakeRMQServiceProvider(RMQService.BOOKS),
-      MakeUserTCPServiceProvider(TCPService.USERS)
+      MakeUserTCPServiceProvider(TCPService.USERS),
     ]),
   ],
   controllers: [UsersController],

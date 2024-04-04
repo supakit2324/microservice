@@ -29,7 +29,7 @@ import UsersQueryEntity from './entities/users-query.entity';
 import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
 import { ReportUserEntity } from './entities/report-users.entity';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
-import { UseRoles, ReqUser } from '@Libs/common/index'
+import { UseRoles, ReqUser } from '@Libs/common/index';
 
 @Controller('users')
 @ApiTags('user')

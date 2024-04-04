@@ -1,4 +1,4 @@
-import { CategoryEnum } from "@Libs/common/index";
+import { CategoryEnum } from '@Libs/common/index';
 
 interface OrdersUsersQueryItemsInterface {
   category: CategoryEnum;

@@ -32,7 +32,7 @@ export const MakeBookTCPServiceProvider = (
   transport: Transport.TCP,
   options: {
     host: 'localhost',
-    port: parseInt(process.env.TCP_PORT_BOOKS)
+    port: parseInt(process.env.TCP_PORT_BOOKS),
   },
 });
 
@@ -43,6 +43,6 @@ export const MakeUserTCPServiceProvider = (
   transport: Transport.TCP,
   options: {
     host: 'localhost',
-    port: parseInt(process.env.TCP_PORT_USERS)
+    port: parseInt(process.env.TCP_PORT_USERS),
   },
 });

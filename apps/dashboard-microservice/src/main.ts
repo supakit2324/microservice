@@ -26,7 +26,7 @@ async function bootstrap() {
     }),
   );
 
-  setupSwagger(app)
+  setupSwagger(app);
 
   app.startAllMicroservices();
   await app.listen(port, () => {
@@ -34,8 +34,8 @@ async function bootstrap() {
       Application ${provider} started listen on port ${port}
       Local Timezone guess: ${dayjs.tz.guess()}
       Local Date: ${dayjs().toDate().toISOString()} ~ ${dayjs().format(
-      'YYYY-MM-DD HH:mm:ss',
-    )}
+        'YYYY-MM-DD HH:mm:ss',
+      )}
     `);
   });
 }

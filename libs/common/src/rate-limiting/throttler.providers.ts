@@ -11,7 +11,7 @@ export const throttlerAsyncOptions: ThrottlerAsyncOptions = {
     {
       ttl: 3000,
       limit: 5,
-      storage: new ThrottlerStorageRedisService,
+      storage: new ThrottlerStorageRedisService(),
       port: configService.get<number>('redis.port'),
       host: configService.get<string>('redis.hosts'),
     },

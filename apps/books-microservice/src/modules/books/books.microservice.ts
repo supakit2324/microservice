@@ -10,7 +10,11 @@ import { Books } from './books.schema';
 import { UpdateBookInterface } from './interfaces/update-book.interface';
 import { BooksStockService } from '../books-stock/books-stock.service';
 import { BOOKS_CMD } from '../../constants';
-import { PaginationResponseInterface, PaginationInterface, FindOptionsInterface } from '@Libs/common/index';
+import {
+  PaginationResponseInterface,
+  PaginationInterface,
+  FindOptionsInterface,
+} from '@Libs/common/index';
 
 @Controller('books')
 export class BooksMicroserive {
@@ -61,7 +65,10 @@ export class BooksMicroserive {
   })
   async getByBookName(@Payload() bookName: string): Promise<Books> {
     try {
-      return await this.booksService.getBooksModel().findOne({ bookName }).lean();
+      return await this.booksService
+        .getBooksModel()
+        .findOne({ bookName })
+        .lean();
     } catch (e) {
       this.logger.error(
         `catch on get-by-bookName: ${e?.message ?? JSON.stringify(e)}`,
@@ -78,16 +85,18 @@ export class BooksMicroserive {
   })
   async getAllBooks(): Promise<Books[]> {
     try {
-      return await this.booksService.getBooksModel().find(
-        {},
-        {
-          _id: 0,
-          imageUrl: 0,
-          createdAt: 0,
-          updatedAt: 0,
-        },
-      )
-      .lean();;
+      return await this.booksService
+        .getBooksModel()
+        .find(
+          {},
+          {
+            _id: 0,
+            imageUrl: 0,
+            createdAt: 0,
+            updatedAt: 0,
+          },
+        )
+        .lean();
     } catch (e) {
       this.logger.error(
         `catch on get-all-books: ${e?.message ?? JSON.stringify(e)}`,

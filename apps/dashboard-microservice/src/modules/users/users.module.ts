@@ -6,7 +6,10 @@ import { AuthService } from '../auth/auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from '../auth/guards/jwt.strategy';
 import { ConfigModule } from '@nestjs/config';
-import { MakeRMQServiceProvider, MakeUserTCPServiceProvider } from "@Libs/common/index"
+import {
+  MakeRMQServiceProvider,
+  MakeUserTCPServiceProvider,
+} from '@Libs/common/index';
 import { RMQService, TCPService } from '../../constants';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ThrottlerModule } from '@nestjs/throttler';
@@ -19,7 +22,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
     ThrottlerModule.forRoot(),
     ClientsModule.register([
       MakeRMQServiceProvider(RMQService.USERS),
-      MakeUserTCPServiceProvider(TCPService.USERS)
+      MakeUserTCPServiceProvider(TCPService.USERS),
     ]),
   ],
   controllers: [UsersController],

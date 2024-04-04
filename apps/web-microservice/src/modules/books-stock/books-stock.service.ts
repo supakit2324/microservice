@@ -6,7 +6,7 @@ import { BooksStockQueryDto } from './dto/books-stock-query.dto';
 import { BooksStockEntity } from './entities/books-stock.entity';
 import { UpdateBooksStockInterface } from './interfaces/update-books-stock.interface';
 import { BOOKSSTOCK_CMD, RMQService, TCPService } from '../../constants';
-import { PaginationResponseInterface } from '@Libs/common/index'
+import { PaginationResponseInterface } from '@Libs/common/index';
 
 @Injectable()
 export class BooksStockService {

@@ -31,15 +31,15 @@ async function bootstrap() {
         durable: false,
       },
     },
-  })
+  });
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.TCP,
     options: {
       host: 'localhost',
-      port: tcp
-    }
-  })
+      port: tcp,
+    },
+  });
 
   app.startAllMicroservices();
   await app.listen(port, () => {

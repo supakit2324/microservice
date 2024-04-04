@@ -1,6 +1,6 @@
 import { ConfigService, ConfigModule } from '@nestjs/config';
 import { MongooseModuleAsyncOptions } from '@nestjs/mongoose';
-import { DB_CONNECTION_NAME } from '@Libs/common/index'
+import { DB_CONNECTION_NAME } from '@Libs/common/index';
 
 export const mongooseModuleAsyncOptions: MongooseModuleAsyncOptions = {
   imports: [ConfigModule],

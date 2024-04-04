@@ -1,4 +1,4 @@
-import { CategoryEnum } from "@Libs/common/index";
+import { CategoryEnum } from '@Libs/common/index';
 
 interface TopSellCategoryItemInterface {
   bookId: string;
@@ -7,7 +7,6 @@ interface TopSellCategoryItemInterface {
   price: number;
   quantity: number;
 }
-
 
 export interface TopSellCategoryInterface {
   category: CategoryEnum;

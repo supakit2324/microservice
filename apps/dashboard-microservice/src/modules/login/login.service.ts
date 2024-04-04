@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom } from 'rxjs';
 import { CalendarDTO } from './dto/calendar.dto';
-import { AMOUNT_LOGIN_CMD, RMQService, TCPService } from '../../constants';
+import { AMOUNT_LOGIN_CMD, TCPService } from '../../constants';
 
 @Injectable()
 export class LoginService {

@@ -84,7 +84,9 @@ export class OrdersService {
     return (await this.getHistoryByOrder(userId, pagination)).length;
   }
 
-  async getOrderByCategory(category: string): Promise<Aggregate<OrdersByCategoryInterface[]>> {
+  async getOrderByCategory(
+    category: string,
+  ): Promise<Aggregate<OrdersByCategoryInterface[]>> {
     const pipeline: PipelineStage[] = [
       {
         $lookup: {
@@ -109,7 +111,7 @@ export class OrdersService {
         $unwind: '$book',
       },
       {
-        $match: { 'book.category': category }
+        $match: { 'book.category': category },
       },
       {
         $group: {
@@ -125,7 +127,13 @@ export class OrdersService {
         },
       },
       {
-        $project: { _id: 0, category: '$_id', quantity: 1, totalPrice: 1, books: 1 },
+        $project: {
+          _id: 0,
+          category: '$_id',
+          quantity: 1,
+          totalPrice: 1,
+          books: 1,
+        },
       },
     ];
     return this.ordersModel.aggregate(pipeline);

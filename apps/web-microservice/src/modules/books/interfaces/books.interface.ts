@@ -1,4 +1,4 @@
-import { CategoryEnum } from "@Libs/common/index";
+import { CategoryEnum } from '@Libs/common/index';
 
 export interface BooksInterface {
   bookName: string;

@@ -15,7 +15,11 @@ import { TopSellerInterface } from './interfaces/top-seller.interface';
 import { TopSellCategoryInterface } from './interfaces/top-sell-category.interface';
 import { ReportOrderInterface } from './interfaces/report-order.interface';
 import { OrdersByCategoryInterface } from './interfaces/orders-category.interface';
-import { PaginationResponseInterface, PaginationInterface, FindOptionsInterface } from '@Libs/common/index';
+import {
+  PaginationResponseInterface,
+  PaginationInterface,
+  FindOptionsInterface,
+} from '@Libs/common/index';
 
 @Controller('orders')
 export class OrdersMicroservice {
@@ -26,7 +30,9 @@ export class OrdersMicroservice {
     cmd: ORDERS_CMD,
     method: 'create-order',
   })
-  async createOrder(@Payload() payload: OrdersInterface): Promise<OrdersInterface> {
+  async createOrder(
+    @Payload() payload: OrdersInterface,
+  ): Promise<OrdersInterface> {
     try {
       await this.ordersService.getOrdersModel().create(payload);
     } catch (e) {
@@ -41,8 +47,8 @@ export class OrdersMicroservice {
       userId: payload.userId,
       bookStockId: payload.bookStockId,
       quantity: payload.quantity,
-      totalPrice: payload.totalPrice
-    }
+      totalPrice: payload.totalPrice,
+    };
   }
 
   @MessagePattern({
@@ -125,8 +131,10 @@ export class OrdersMicroservice {
     cmd: ORDERS_CMD,
     method: 'get-order-by-category',
   })
-  async getOrderByCategory(query: { category: string }): Promise<OrdersByCategoryInterface[]> {
-    try { 
+  async getOrderByCategory(query: {
+    category: string;
+  }): Promise<OrdersByCategoryInterface[]> {
+    try {
       return await this.ordersService.getOrderByCategory(query.category);
     } catch (e) {
       this.logger.error(
@@ -213,7 +221,10 @@ export class OrdersMicroservice {
     cmd: ORDERS_CMD,
     method: 'get-report',
   })
-  async getReport(query: { startDay: Date; endDay: Date }): Promise<ReportOrderInterface[]> {
+  async getReport(query: {
+    startDay: Date;
+    endDay: Date;
+  }): Promise<ReportOrderInterface[]> {
     try {
       return await this.ordersService.getReport(query);
     } catch (e) {

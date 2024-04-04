@@ -7,7 +7,7 @@ import { JwtStrategy } from './guards/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
-import { MakeUserTCPServiceProvider } from "@Libs/common/index"
+import { MakeUserTCPServiceProvider } from '@Libs/common/index';
 import { TCPService } from '../../constants';
 import { ThrottlerModule } from '@nestjs/throttler';
 
@@ -18,9 +18,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
     ConfigModule.forRoot(),
     CacheModule.register(),
     ThrottlerModule.forRoot(),
-    ClientsModule.register([
-      MakeUserTCPServiceProvider(TCPService.USERS)
-    ])
+    ClientsModule.register([MakeUserTCPServiceProvider(TCPService.USERS)]),
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],

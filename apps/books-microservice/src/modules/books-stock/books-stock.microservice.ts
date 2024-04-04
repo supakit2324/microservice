@@ -10,7 +10,11 @@ import { AddBookStock } from './interfaces/add-book-stock.interface';
 import { UpdateBooksStockInterface } from './interfaces/update-books-stock.interface';
 import { BooksStockInterface } from './interfaces/books-stock.interface';
 import { BOOKSSTOCK_CMD } from '../../constants';
-import { PaginationResponseInterface, PaginationInterface, FindOptionsInterface } from '@Libs/common/index';
+import {
+  PaginationResponseInterface,
+  PaginationInterface,
+  FindOptionsInterface,
+} from '@Libs/common/index';
 
 @Controller('books-stock')
 export class BooksStockMicroservice {
@@ -24,7 +28,10 @@ export class BooksStockMicroservice {
   })
   async getBookStockById(@Payload() bookId: string): Promise<BooksStock> {
     try {
-      return this.booksStockService.getBooksStockModel().findOne({ bookId }).lean();
+      return this.booksStockService
+        .getBooksStockModel()
+        .findOne({ bookId })
+        .lean();
     } catch (e) {
       this.logger.error(
         `catch on get-book-stock-by-id: ${e?.message ?? JSON.stringify(e)}`,
@@ -41,15 +48,17 @@ export class BooksStockMicroservice {
   })
   async getAllBooksInStock(): Promise<BooksStock> {
     try {
-      return this.booksStockService.getBooksStockModel().find(
-        {},
-        {
-          _id: 0,
-          createdAt: 0,
-          updatedAt: 0,
-        },
-      )
-      .lean();
+      return this.booksStockService
+        .getBooksStockModel()
+        .find(
+          {},
+          {
+            _id: 0,
+            createdAt: 0,
+            updatedAt: 0,
+          },
+        )
+        .lean();
     } catch (e) {
       this.logger.error(
         `catch on get-all-books-in-stock: ${e?.message ?? JSON.stringify(e)}`,
@@ -197,7 +206,9 @@ export class BooksStockMicroservice {
     cmd: BOOKSSTOCK_CMD,
     method: 'get-running-out',
   })
-  async getRunningOut(@Payload() query: { min: number }): Promise<BooksStockInterface> {
+  async getRunningOut(
+    @Payload() query: { min: number },
+  ): Promise<BooksStockInterface> {
     const { min } = query;
     try {
       return await this.booksStockService

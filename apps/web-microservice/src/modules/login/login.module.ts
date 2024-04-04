@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ClientsModule } from '@nestjs/microservices';
 import { LoginService } from './login.service';
 import { ConfigModule } from '@nestjs/config';
-import { MakeRMQServiceProvider } from '@Libs/common/index'
+import { MakeRMQServiceProvider } from '@Libs/common/index';
 import { RMQService } from '../../constants';
 import { CacheModule } from '@nestjs/cache-manager';
 
@@ -10,9 +10,7 @@ import { CacheModule } from '@nestjs/cache-manager';
   imports: [
     ConfigModule.forRoot(),
     CacheModule.register(),
-    ClientsModule.register([
-      MakeRMQServiceProvider(RMQService.USERS)
-    ]),
+    ClientsModule.register([MakeRMQServiceProvider(RMQService.USERS)]),
   ],
   providers: [LoginService],
 })

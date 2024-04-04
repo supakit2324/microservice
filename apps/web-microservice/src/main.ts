@@ -19,7 +19,7 @@ async function bootstrap() {
   const provider = configService.get<string>('provider');
   const logger = new Logger();
 
-  setupSwagger(app)
+  setupSwagger(app);
 
   app.useGlobalPipes(
     new ValidationPipe({

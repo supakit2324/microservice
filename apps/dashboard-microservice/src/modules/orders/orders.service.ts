@@ -9,7 +9,7 @@ import { OrdersUsersInterface } from './interfaces/orders-users-query.interface'
 import { TopSellCategoryInterface } from './interfaces/top-sell-category.interface';
 import { OrdersQueryByCategoryDTO } from './dto/orders-query-category.dto';
 import OrdersQueryByCategoryEntity from './entities/orders-query-category.entity';
-import { ORDERS_CMD, RMQService, TCPService } from '../../constants';
+import { ORDERS_CMD, TCPService } from '../../constants';
 import { PageQueryDto } from '../../dto/query.dto';
 
 @Injectable()
@@ -64,16 +64,18 @@ export class OrdersService {
     );
   }
 
-  async getOrderByCategory(query: OrdersQueryByCategoryDTO): Promise<OrdersQueryByCategoryEntity> {
+  async getOrderByCategory(
+    query: OrdersQueryByCategoryDTO,
+  ): Promise<OrdersQueryByCategoryEntity> {
     return lastValueFrom(
       this.ordersServiceTCP.send(
         {
           cmd: ORDERS_CMD,
           method: 'get-order-by-category',
         },
-        query
-      )
-    )
+        query,
+      ),
+    );
   }
 
   async getReport(query: DayQueryDTO): Promise<ReportOrderInterface[]> {

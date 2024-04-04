@@ -12,15 +12,10 @@ import { CacheModule } from '@nestjs/cache-manager';
 @Module({
   imports: [
     MongooseModule.forFeature(model, DB_CONNECTION_NAME),
-    CacheModule.register()
+    CacheModule.register(),
   ],
   controllers: [UsersMicroserviec],
-  providers: [
-    UsersService,
-    ConfigService,
-    JwtService,
-    AuthService
-  ],
+  providers: [UsersService, ConfigService, JwtService, AuthService],
   exports: [UsersService],
 })
 export class UsersModule {}
