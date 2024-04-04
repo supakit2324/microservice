@@ -1,14 +1,7 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { IsEnum, IsNotEmpty, IsOptional, Max, Min } from 'class-validator';
-import CategoryEnum from '../../utils/books/enum/category.enum';
-
-export enum SortBooksQueryEnum {
-  QUANTITY_ASC = 'quantity_asc',
-  QUANTITY_DESC = 'quantity_desc',
-  PRICE_ASC = 'price_asc',
-  PRICE_DESC = 'price_desc',
-}
+import { CategoryUtilsEnum, ESortBooksQuery } from '@Libs/common/index';
 
 export class BooksStockQueryDto {
   @ApiProperty({
@@ -27,12 +20,12 @@ export class BooksStockQueryDto {
   perPage: number;
 
   @ApiProperty({
-    enum: CategoryEnum,
-    example: CategoryEnum.ALL,
+    enum: CategoryUtilsEnum,
+    example: CategoryUtilsEnum.ALL,
   })
-  @IsEnum(CategoryEnum)
+  @IsEnum(CategoryUtilsEnum)
   @IsNotEmpty()
-  category: CategoryEnum;
+  category: CategoryUtilsEnum;
 
   @ApiPropertyOptional({
     description: '',
@@ -45,10 +38,10 @@ export class BooksStockQueryDto {
   sort: Record<string, any>;
 
   @ApiProperty({
-    enum: SortBooksQueryEnum,
-    example: SortBooksQueryEnum.PRICE_ASC,
+    enum: ESortBooksQuery,
+    example: ESortBooksQuery.PRICE_ASC,
   })
-  @IsEnum(SortBooksQueryEnum)
+  @IsEnum(ESortBooksQuery)
   @IsNotEmpty()
-  kSort: SortBooksQueryEnum;
+  kSort: ESortBooksQuery;
 }

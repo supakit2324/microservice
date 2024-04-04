@@ -6,7 +6,7 @@ import { AuthService } from '../auth/auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from '../auth/guards/jwt.strategy';
 import { ConfigModule } from '@nestjs/config';
-import { MakeRMQServiceProvider, MakeUserTCPServiceProvider } from '../../microservice.providers';
+import { MakeRMQServiceProvider, MakeUserTCPServiceProvider } from "@Libs/common/index"
 import { RMQService, TCPService } from '../../constants';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ThrottlerModule } from '@nestjs/throttler';

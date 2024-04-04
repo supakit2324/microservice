@@ -6,7 +6,7 @@ import { BooksInterface } from './interfaces/books.interface';
 import { BooksQueryDto } from './dto/books-query.dto';
 import { BooksEntity } from './entities/books.entity';
 import { BOOKS_CMD, RMQService, TCPService } from '../../constants';
-import { PaginationResponseInterface } from 'apps/interfaces/pagination.interface';
+import { PaginationResponseInterface } from '@Libs/common/index'
 
 @Injectable()
 export class BooksService {

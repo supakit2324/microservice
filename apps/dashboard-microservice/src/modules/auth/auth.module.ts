@@ -7,7 +7,7 @@ import { JwtStrategy } from './guards/jwt.strategy';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule } from '@nestjs/config';
-import { MakeUserTCPServiceProvider } from '../../microservice.providers';
+import { MakeUserTCPServiceProvider } from "@Libs/common/index"
 import { TCPService } from '../../constants';
 import { ThrottlerModule } from '@nestjs/throttler';
 

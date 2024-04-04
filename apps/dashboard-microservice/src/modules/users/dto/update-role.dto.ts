@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { RolesUserEnum } from '../enum/roles-user.enum';
+import { RolesUserEnum } from '@Libs/common/index';
 
 export class UpdateRolesDTO {
   @ApiProperty({
@@ -12,7 +12,7 @@ export class UpdateRolesDTO {
   @ApiProperty({
     type: String,
     enum: RolesUserEnum,
-    example: RolesUserEnum.USER,
+    example: RolesUserEnum.MEMBER,
   })
   roles?: string;
 }

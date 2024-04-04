@@ -20,10 +20,9 @@ import { ChangePasswordUserValidationPipe } from './pipes/change-password-user-v
 import { UpdateUserDto } from './dto/update-user.dto';
 import { registerUserValidationPipe } from './pipes/register-user-validation.pipe';
 import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
-import { UseRoles } from 'apps/decorators/role.decorator';
-import ReqUser from 'apps/decorators/req-user.decorator';
-import { RolesUserEnum } from 'apps/web-microservice/src/modules/users/enum/roles-user.enum';
+import { RolesUserEnum } from '@Libs/common/index';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import { UseRoles, ReqUser } from "@Libs/common/index"
 
 @Controller('users')
 @ApiTags('user')
@@ -54,7 +53,7 @@ export class UsersController {
 
   @Get('me')
   @ApiBearerAuth()
-  @UseRoles(RolesUserEnum.USER, RolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.MEMBER, RolesUserEnum.ADMIN)
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
   async getMe(@ReqUser() user: UsersInterface): Promise<userEntity> {
     return user;
@@ -65,7 +64,7 @@ export class UsersController {
     type: UpdateUserDto,
   })
   @ApiBearerAuth()
-  @UseRoles(RolesUserEnum.USER, RolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.MEMBER, RolesUserEnum.ADMIN)
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
   @ApiResponse({
     status: 200,
@@ -93,7 +92,7 @@ export class UsersController {
     type: ChangePasswordDto,
   })
   @ApiBearerAuth()
-  @UseRoles(RolesUserEnum.USER, RolesUserEnum.ADMIN)
+  @UseRoles(RolesUserEnum.MEMBER, RolesUserEnum.ADMIN)
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
   @ApiResponse({
     status: 200,

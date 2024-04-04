@@ -8,9 +8,9 @@ import { BooksModule } from '../books/books.module';
 import { BooksStockModule } from '../books-stock/books-stock.module';
 import { OrdersModule } from '../orders/orders.module';
 import { LoginModule } from '../login/login.module';
-import configuration from 'apps/config/configuration';
-import RegisterCacheOptions, { cachingServiceProvider } from '../../cache.providers';
-import throttlerAsyncOptions, { throttlerServiceProvider } from '../../throttler.providers';
+import { throttlerAsyncOptions, throttlerServiceProvider } from '@Libs/common/index'
+import configuration from '../../config/configuration';
+import { RegisterCacheOptions, cachingServiceProvider } from '@Libs/common/index'
 
 @Module({
   imports: [

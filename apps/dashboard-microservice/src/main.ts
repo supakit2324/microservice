@@ -2,21 +2,21 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './modules/app/app.module';
 import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
-import * as dayjs from 'dayjs';
-import 'dayjs/plugin/timezone';
-import 'dayjs/plugin/isToday';
-import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { getQueueName } from './microservice.providers';
 import { setupSwagger } from './swagger';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import isToday from 'dayjs/plugin/isToday';
 
-dayjs.extend(require('dayjs/plugin/timezone'));
-dayjs.extend(require('dayjs/plugin/isToday'));
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(isToday);
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get<ConfigService>(ConfigService);
-  const port = configService.get('dashboard.port');
-  const provider = configService.get<string>('dashboard.provider');
+  const port = configService.get('port');
+  const provider = configService.get<string>('provider');
   const logger = new Logger();
 
   app.useGlobalPipes(
@@ -27,17 +27,6 @@ async function bootstrap() {
   );
 
   setupSwagger(app)
-
-  app.connectMicroservice<MicroserviceOptions>({
-    transport: Transport.RMQ,
-    options: {
-      urls: [process.env.rmq],
-      queue: getQueueName(provider),
-      queueOptions: {
-        durable: false,
-      },
-    },
-  });
 
   app.startAllMicroservices();
   await app.listen(port, () => {

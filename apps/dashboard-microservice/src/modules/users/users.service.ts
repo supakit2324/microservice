@@ -8,7 +8,7 @@ import { UsersInterface } from './interfaces/users.interface';
 import { UsersQueryDto } from './dto/users-query.dto';
 import { UsersQueryResponseEntity } from './entities/users-query-response.entity';
 import { RMQService, TCPService, USER_CMD } from '../../constants';
-import { PaginationResponseInterface } from 'apps/interfaces/pagination.interface';
+import { PaginationResponseInterface } from '@Libs/common/index';
 
 @Injectable()
 export class UsersService {

@@ -1,5 +1,5 @@
 import omit from 'lodash/omit';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { isEqual, orderBy } from 'lodash';
 import { ReportOrderDTO } from '../../orders/dto/report-order.dto';
 import { DayQueryDTO } from '../../orders/dto/day-query.dto';

@@ -2,7 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Users } from './users.schema';
 import { FilterQuery, Model, SortOrder } from 'mongoose';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { DB_CONNECTION_NAME } from '../../constants';
 
 @Injectable()

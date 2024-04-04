@@ -102,7 +102,16 @@
     "coverageDirectory": "./coverage",
     "testEnvironment": "node",
     "roots": [
-      "<rootDir>/apps/"
-    ]
+      "<rootDir>/apps/",
+      "<rootDir>/libs/"
+    ],
+    "moduleNameMapper": {
+      "^books-microservice/common(|/.*)$": "<rootDir>/libs/common/src/$1",
+      "^@Libs/common(|/.*)$": "<rootDir>/libs/common/src/$1",
+      "^@Libs/users(|/.*)$": "<rootDir>/libs/users/src/$1",
+      "^@Libs/books(|/.*)$": "<rootDir>/libs/books/src/$1",
+      "^@Libs/books-library(|/.*)$": "<rootDir>/libs/books-library/src/$1",
+      "^@Libs/users-library(|/.*)$": "<rootDir>/libs/users-library/src/$1"
+    }
   }
 }

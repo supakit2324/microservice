@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import CategoryEnum from '../enum/category.enum';
+import { CategoryEnum } from "@Libs/common/index";
 import { IsEnum, IsNotEmpty } from 'class-validator';
 
 export class CreateBooksDTO {

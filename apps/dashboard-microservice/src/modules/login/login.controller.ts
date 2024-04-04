@@ -14,13 +14,13 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { AmountLoginDTO } from './dto/login.dto';
 import { CalendarDTO } from './dto/calendar.dto';
 import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
-import { RolesUserEnum } from '../users/enum/roles-user.enum';
+import { RolesUserEnum } from '@Libs/common/index';
 import { UserLastLoginResponseEntity } from './entities/user-last-login-respones.entity';
-import { UseRoles } from 'apps/decorators/role.decorator';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import { UseRoles } from '@Libs/common/index';
 
-@Controller('amount-login')
-@ApiTags('amount-login')
+@Controller('report-users')
+@ApiTags('report-users')
 @ApiBearerAuth()
 @UseInterceptors(CacheInterceptor)
 @CacheTTL(6000)
@@ -30,7 +30,7 @@ export class LogginController {
     private readonly loginService: LoginService
   ) {}
 
-  @Get('amount-users-login')
+  @Get('users-login')
   @UseGuards(JwtAuthGuard, JwtRoleGuard)
   @UseRoles(RolesUserEnum.ADMIN)
   @ApiResponse({

@@ -7,7 +7,7 @@ import { BooksStockQueryDto } from './dto/books-stock-query.dto';
 import { BooksStockEntity } from './entities/books-stock.entity';
 import { RunningOutQueryDTO } from './dto/running-out-query.dto';
 import { BOOKSSTOCK_CMD, RMQService, TCPService } from '../../constants';
-import { PaginationResponseInterface } from 'apps/interfaces/pagination.interface';
+import { PaginationResponseInterface } from '@Libs/common/index';
 
 @Injectable()
 export class BooksStockService {

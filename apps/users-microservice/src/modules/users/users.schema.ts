@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { v4 as uuidv4 } from 'uuid';
-import RoleUser from './enum/roles-user.enum';
-import StatusUser from './enum/status-user.enum';
+import { RolesUserEnum, StatusUser } from '@Libs/common/index'
 
 @Schema({ collection: 'users', timestamps: true, versionKey: false })
 export class Users {
@@ -62,10 +61,10 @@ export class Users {
 
   @Prop({
     type: String,
-    enum: RoleUser,
-    default: RoleUser.MEMBER,
+    enum: RolesUserEnum,
+    default: RolesUserEnum.MEMBER,
   })
-  roles?: RoleUser;
+  roles?: RolesUserEnum;
 
   @Prop({
     type: String,

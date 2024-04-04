@@ -15,8 +15,7 @@ import { TopSellerInterface } from './interfaces/top-seller.interface';
 import { TopSellCategoryInterface } from './interfaces/top-sell-category.interface';
 import { ReportOrderInterface } from './interfaces/report-order.interface';
 import { OrdersByCategoryInterface } from './interfaces/orders-category.interface';
-import { PaginationInterface, PaginationResponseInterface } from 'apps/interfaces/pagination.interface';
-import { FindOptionsInterface } from 'apps/interfaces/find-options.interface';
+import { PaginationResponseInterface, PaginationInterface, FindOptionsInterface } from '@Libs/common/index';
 
 @Controller('orders')
 export class OrdersMicroservice {

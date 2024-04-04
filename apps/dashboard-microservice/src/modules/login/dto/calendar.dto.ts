@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional } from 'class-validator';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 
 export class CalendarDTO {
   @ApiProperty({

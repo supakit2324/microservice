@@ -20,16 +20,15 @@ import UsersOrderHistoryQueryEntity from './entities/users-order-history-query.e
 import { UsersHistoryQueryDto } from './dto/users-history-query.dto';
 import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
 import { CreateOrderEntity } from './entities/create-order.entity';
-import { UseRoles } from 'apps/decorators/role.decorator';
-import { RolesUserEnum } from 'apps/web-microservice/src/modules/users/enum/roles-user.enum';
-import ReqUser from 'apps/decorators/req-user.decorator';
-import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
+import { RolesUserEnum } from '@Libs/common/index';
+import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import { UseRoles, ReqUser } from "@Libs/common/index"
 
 @Controller('orders')
 @ApiTags('user')
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard, JwtRoleGuard)
-@UseRoles(RolesUserEnum.USER, RolesUserEnum.ADMIN)
+@UseRoles(RolesUserEnum.MEMBER, RolesUserEnum.ADMIN)
 @UseInterceptors(CacheInterceptor)
 @CacheTTL(6000)
 export class OrdersController {

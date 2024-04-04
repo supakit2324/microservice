@@ -10,8 +10,7 @@ import { AddBookStock } from './interfaces/add-book-stock.interface';
 import { UpdateBooksStockInterface } from './interfaces/update-books-stock.interface';
 import { BooksStockInterface } from './interfaces/books-stock.interface';
 import { BOOKSSTOCK_CMD } from '../../constants';
-import { FindOptionsInterface } from 'apps/interfaces/find-options.interface';
-import { PaginationInterface, PaginationResponseInterface } from 'apps/interfaces/pagination.interface';
+import { PaginationResponseInterface, PaginationInterface, FindOptionsInterface } from '@Libs/common/index';
 
 @Controller('books-stock')
 export class BooksStockMicroservice {

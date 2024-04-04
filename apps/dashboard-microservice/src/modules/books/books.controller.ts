@@ -20,14 +20,14 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { BooksInterface } from './interfaces/books.interface';
 import BooksQueryEntity from './entities/books-query.entity';
 import { BooksQueryDto } from './dto/books-query.dto';
-import { BooksCategoryUtil } from '../utils/books';
+import { BooksCategoryUtil } from '@Libs/common/index';
 import { UpdateBookDTO } from './dto/update-book.dto';
 import { UpdateBookInterface } from './interfaces/update-book.interfcace';
 import { UpdateBookValidationPipe } from './pipe/update-book-validation.pipe';
-import { RolesUserEnum } from '../users/enum/roles-user.enum';
+import { RolesUserEnum } from '@Libs/common/index';
 import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
-import { UseRoles } from 'apps/decorators/role.decorator';
-import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
+import { UseRoles } from '@Libs/common/index';
 
 @Controller('books')
 @ApiTags('books')
@@ -41,7 +41,27 @@ export class BooksController {
 
   constructor(private readonly booksService: BooksService) {}
 
-  @Get('pagination')
+  @Post('create-book')
+  @ApiBody({
+    type: CreateBooksDTO,
+  })
+  async createBook(
+    @Body(CreateBooksValidationPipe) body: CreateBooksDTO,
+  ): Promise<void> {
+    try {
+      await this.booksService.createBook(body);
+    } catch (e) {
+      this.logger.error(
+        `catch on create-book: ${e?.message ?? JSON.stringify(e)}`,
+      );
+      throw new InternalServerErrorException({
+        message: e?.message ?? e,
+      });
+    }
+  }
+
+  @CacheKey('pagination')
+  @Get('')
   @ApiResponse({
     status: 200,
     description: 'Success',
@@ -72,26 +92,8 @@ export class BooksController {
     }
   }
 
-  @Post('create-book')
-  @ApiBody({
-    type: CreateBooksDTO,
-  })
-  async createBook(
-    @Body(CreateBooksValidationPipe) body: CreateBooksDTO,
-  ): Promise<void> {
-    try {
-      await this.booksService.createBook(body);
-    } catch (e) {
-      this.logger.error(
-        `catch on create-book: ${e?.message ?? JSON.stringify(e)}`,
-      );
-      throw new InternalServerErrorException({
-        message: e?.message ?? e,
-      });
-    }
-  }
-
-  @Get('get-all-books')
+  @CacheKey('all-books')
+  @Get('all-books')
   async getAllBooks(): Promise<BooksInterface[]> {
     try {
       return await this.booksService.getAllBooks();
@@ -105,7 +107,7 @@ export class BooksController {
     }
   }
 
-  @Put('update-book')
+  @Put(':bookId')
   @ApiBody({
     type: UpdateBookDTO,
   })
@@ -124,6 +126,7 @@ export class BooksController {
     }
   }
 
+  @CacheKey('delete-book')
   @Delete(':bookId')
   @ApiResponse({
     status: 200,

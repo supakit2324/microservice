@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Orders } from './orders.schema';
 import { Aggregate, Model, PipelineStage } from 'mongoose';
 import { DB_CONNECTION_NAME } from '../../constants';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { TopSellCategoryInterface } from './interfaces/top-sell-category.interface';
 import { ReportOrderInterface } from './interfaces/report-order.interface';
 import { OrdersHistoryInterface } from './interfaces/orders-history.interface';

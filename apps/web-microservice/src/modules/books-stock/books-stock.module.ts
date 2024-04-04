@@ -6,7 +6,7 @@ import { PassportModule } from '@nestjs/passport';
 import { BooksStockService } from './books-stock.service';
 import { BooksStockController } from './books-stock.controller';
 import { ConfigModule } from '@nestjs/config';
-import { MakeRMQServiceProvider, MakeBookTCPServiceProvider } from '../../microservice.providers';
+import { MakeRMQServiceProvider, MakeBookTCPServiceProvider } from '@Libs/common/index'
 import { RMQService, TCPService } from '../../constants';
 
 @Module({

@@ -6,15 +6,14 @@ import {
 import { LoginService } from './login.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { AmountLogin } from './login.schema';
-import * as dayjs from 'dayjs';
-import 'dayjs/plugin/timezone';
-import 'dayjs/plugin/isToday';
 import { Users } from '../users/users.schema';
 import { UsersService } from '../users/users.service';
 import { AMOUNT_LOGIN_CMD } from '../../constants';
-
-dayjs.extend(require('dayjs/plugin/timezone'));
-dayjs.extend(require('dayjs/plugin/isToday'));
+import dayjs from 'dayjs';
+import timezone from 'dayjs/plugin/timezone';
+import isToday from 'dayjs/plugin/isToday';
+dayjs.extend(timezone);
+dayjs.extend(isToday);
 
 @Controller('amount-login')
 export class LoginMicroservice {

@@ -22,16 +22,14 @@ import { ChangePasswordUserValidationPipe } from './pipes/change-password-user-v
 import { ChangePasswordEntity } from './entities/change-password.entity';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UpdateUserEntity } from './entities/update-user.entity';
-import { RolesUserEnum } from './enum/roles-user.enum';
+import { RolesUserEnum } from '@Libs/common/index';
 import { UpdateRolesDTO } from './dto/update-role.dto';
 import { UsersQueryDto } from './dto/users-query.dto';
 import UsersQueryEntity from './entities/users-query.entity';
 import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
 import { ReportUserEntity } from './entities/report-users.entity';
-import { UseRoles } from 'apps/decorators/role.decorator';
-import ReqUser from 'apps/decorators/req-user.decorator';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
-import { SkipThrottle, Throttle } from '@nestjs/throttler';
+import { UseRoles, ReqUser } from '@Libs/common/index'
 
 @Controller('users')
 @ApiTags('user')

@@ -10,7 +10,7 @@ import { BooksStockService } from './books-stock.service';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import BooksStockQueryEntity from './entities/books-stock-query.entity';
 import { BooksStockQueryDto } from './dto/books-stock-query.dto';
-import { BooksCategoryUtil } from '../utils/books';
+import { BooksCategoryUtil } from '@Libs/common/index';
 import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
 
 @Controller('books-stock')

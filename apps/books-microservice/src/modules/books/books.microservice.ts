@@ -10,8 +10,7 @@ import { Books } from './books.schema';
 import { UpdateBookInterface } from './interfaces/update-book.interface';
 import { BooksStockService } from '../books-stock/books-stock.service';
 import { BOOKS_CMD } from '../../constants';
-import { FindOptionsInterface } from 'apps/interfaces/find-options.interface';
-import { PaginationInterface, PaginationResponseInterface } from 'apps/interfaces/pagination.interface';
+import { PaginationResponseInterface, PaginationInterface, FindOptionsInterface } from '@Libs/common/index';
 
 @Controller('books')
 export class BooksMicroserive {

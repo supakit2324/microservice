@@ -17,6 +17,12 @@
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
-    "paths": {}
+    "esModuleInterop": true,
+    "paths": {
+      "@Libs/common/*": [
+        "libs/common/src/*",
+        "libs/common/src/*"
+      ],
+    }
   }
 }

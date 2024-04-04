@@ -3,7 +3,7 @@ import { ClientsModule } from '@nestjs/microservices';
 import { LoginService } from './login.service';
 import { LogginController } from './login.controller';
 import { ConfigModule } from '@nestjs/config';
-import { MakeUserTCPServiceProvider } from '../../microservice.providers';
+import { MakeUserTCPServiceProvider } from "@Libs/common/index"
 import { TCPService } from '../../constants';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ThrottlerModule } from '@nestjs/throttler';

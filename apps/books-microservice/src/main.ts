@@ -3,26 +3,29 @@ import { AppModule } from './modules/app/app.module';
 import { Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import * as dayjs from 'dayjs';
-import 'dayjs/plugin/timezone';
-import 'dayjs/plugin/isToday';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+import isToday from 'dayjs/plugin/isToday';
 
-dayjs.extend(require('dayjs/plugin/timezone'));
-dayjs.extend(require('dayjs/plugin/isToday'));
+dayjs.extend(utc);
+dayjs.extend(timezone);
+dayjs.extend(isToday);
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get<ConfigService>(ConfigService);
-  const port = configService.get('books.port');
-  const tcp = configService.get('tcpBook')
-  const provider = configService.get<string>('books.provider');
+  const port = configService.get('port');
+  const tcp = configService.get('tcpBook');
+  const rmq = configService.get('rmq');
+  const provider = configService.get<string>('provider');
   const logger = new Logger();
 
   app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.RMQ,
     options: {
       noAck: true,
-      urls: [process.env.rmq],
+      urls: rmq,
       queue: provider,
       queueOptions: {
         durable: false,

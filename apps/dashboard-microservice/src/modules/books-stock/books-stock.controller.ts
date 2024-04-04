@@ -28,13 +28,13 @@ import { BooksStockInterface } from './interfaces/books-stock.interface';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { BooksStockQueryDto } from './dto/books-stock-query.dto';
 import BooksStockQueryEntity from './entities/books-stock-query.entity';
-import { BooksStockCategoryUtil } from '../utils/books-stock';
+import { BooksCategoryUtil } from '@Libs/common/index';
 import { JwtRoleGuard } from '../auth/guards/jwt-role.guard';
-import { RolesUserEnum } from '../users/enum/roles-user.enum';
+import { RolesUserEnum } from '@Libs/common/index';
 import { RunningOutQueryDTO } from './dto/running-out-query.dto';
 import { RunningOutEntity } from './entities/running-out.entity';
-import { UseRoles } from 'apps/decorators/role.decorator';
-import { CacheInterceptor, CacheTTL } from '@nestjs/cache-manager';
+import { CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
+import { UseRoles } from '@Libs/common/index';
 
 @Controller('books-stock')
 @ApiTags('books-stock')
@@ -48,7 +48,8 @@ export class BooksStockController {
 
   constructor(private readonly booksStockService: BooksStockService) {}
 
-  @Get('pagination')
+  @CacheKey('pagination')
+  @Get('')
   @ApiResponse({
     status: 200,
     description: 'Success',
@@ -59,9 +60,9 @@ export class BooksStockController {
   ): Promise<BooksStockQueryEntity> {
     const { filter, category, kSort, bookName } = query;
 
-    query.filter = BooksStockCategoryUtil.getQueryByCategory(category);
+    query.filter = BooksCategoryUtil.getQueryByCategory(category);
 
-    query.sort = BooksStockCategoryUtil.sort(kSort);
+    query.sort = BooksCategoryUtil.sort(kSort);
 
     if (bookName) {
       filter.bookName = { $regex: `${bookName}` };
@@ -79,7 +80,7 @@ export class BooksStockController {
     }
   }
 
-  @Get('get-all-books-in-stock')
+  @Get('all-books')
   async getAllBooksInStock(): Promise<BooksStockInterface[]> {
     try {
       return await this.booksStockService.getAllBooksInStock();
@@ -93,7 +94,8 @@ export class BooksStockController {
     }
   }
 
-  @Post('create-book-to-stock')
+  @CacheKey('create-book')
+  @Post('')
   @ApiBody({
     type: CreateBookStockDTO,
   })
@@ -112,7 +114,7 @@ export class BooksStockController {
     }
   }
 
-  @Put('add-book-in-stock/:bookId')
+  @Put(':bookId')
   @ApiParam({
     type: String,
     name: 'bookId',

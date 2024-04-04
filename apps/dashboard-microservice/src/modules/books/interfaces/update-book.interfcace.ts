@@ -1,4 +1,4 @@
-import CategoryEnum from '../enum/category.enum';
+import { CategoryEnum } from "@Libs/common/index";
 
 export interface UpdateBookInterface {
   bookId: string;

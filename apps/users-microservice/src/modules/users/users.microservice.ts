@@ -1,9 +1,7 @@
 import {
   Controller,
-  Inject,
   InternalServerErrorException,
   Logger,
-  UseInterceptors,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { MessagePattern, Payload } from '@nestjs/microservices';
@@ -12,11 +10,9 @@ import { AuthService } from '../auth/auth.service';
 import { LoginInterface } from '../auth/interface/login.interface';
 import { Users } from './users.schema';
 import { PayloadUpdateUserInterface } from './interface/payload-update-user.interface';
-import StatusUser from './enum/status-user.enum';
 import { USER_CMD } from '../../constants';
-import { FindOptionsInterface } from 'apps/interfaces/find-options.interface';
-import { PaginationInterface, PaginationResponseInterface } from 'apps/interfaces/pagination.interface';
-import { CACHE_MANAGER, CacheInterceptor, CacheKey, CacheTTL } from '@nestjs/cache-manager';
+import { PaginationResponseInterface, PaginationInterface, FindOptionsInterface } from '@Libs/common/index'
+import { RolesUserEnum, StatusUser } from '@Libs/common/index'
 
 @Controller('users')
 export class UsersMicroserviec {
@@ -24,7 +20,6 @@ export class UsersMicroserviec {
   constructor(
     private readonly usersService: UsersService,
     private readonly authService: AuthService,
-    @Inject(CACHE_MANAGER) private cacheManager: Cache
   ) { }
 
   @MessagePattern({
@@ -98,7 +93,7 @@ export class UsersMicroserviec {
   })
   async getByUserId(@Payload() userId: string): Promise<Users> {
     try {
-      return this.authService.getByUserId(userId);
+      return this.usersService.getUserModel().findOne({ userId }).lean();
     } catch (error) {
       this.logger.error(
         `catch on getByUserId: ${error?.message ?? JSON.stringify(error)}`,
@@ -115,7 +110,7 @@ export class UsersMicroserviec {
   })
   async getByEmail(@Payload() email: string): Promise<Users> {
     try {
-      return this.authService.getByEmail(email);
+      return this.usersService.getUserModel().findOne({ email }).lean();
     } catch (error) {
       this.logger.error(
         `catch on getByEmail: ${error?.message ?? JSON.stringify(error)}`,
@@ -132,7 +127,7 @@ export class UsersMicroserviec {
   })
   async getByUsername(@Payload() username: string): Promise<Users> {
     try {
-      return this.authService.getByUsername(username);
+      return this.usersService.getUserModel().findOne({ username }).lean();
     } catch (error) {
       this.logger.error(
         `catch on getByUsername: ${error?.message ?? JSON.stringify(error)}`,
@@ -149,7 +144,10 @@ export class UsersMicroserviec {
   })
   async getBlockUser(email: string): Promise<Users> {
     try {
-      return this.authService.blockUser(email);
+      return this.usersService.getUserModel().findOne({
+        email: email,
+        roles: StatusUser.INACTIVE,
+      });
     } catch (error) {
       this.logger.error(
         `catch on getBlockUser: ${error?.message ?? JSON.stringify(error)}`,
@@ -211,7 +209,7 @@ export class UsersMicroserviec {
   })
   async deleteUser(@Payload() userId: string): Promise<void> {
     try {
-      await this.usersService.getUserModel().deleteOne({userId}).exec()
+      await this.usersService.getUserModel().deleteOne({ userId }).exec()
     } catch (e) {
       this.logger.error(
         `catch on deleteUser: ${e?.message ?? JSON.stringify(e)}`,
@@ -354,7 +352,10 @@ export class UsersMicroserviec {
   })
   async getAdminRole(email: string): Promise<Users> {
     try {
-      return await this.authService.getAdminRole(email);
+      return await this.usersService.getUserModel().findOne({
+        email: email,
+        roles: RolesUserEnum.ADMIN,
+      });
     } catch (e) {
       this.logger.error(
         `catch on getAdminRole: ${e?.message ?? JSON.stringify(e)}`,

@@ -1,4 +1,4 @@
-import CategoryEnum from "../../books/enum/category.enum";
+import { CategoryEnum } from "@Libs/common/index";
 
 interface TopSellCategoryItemInterface {
   bookId: string;
